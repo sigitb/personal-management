@@ -1,17 +1,16 @@
 
 // import { BreadcrumbItem } from '@/types';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Eye, LucideIcon, Pencil, Trash } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Eye,Pencil, Trash } from 'lucide-react';
 import ActionButtons from '@/components/action-button';
 import AppLayout from '@/Layouts/AppLayout';
 import { DataTable } from '@/components/Datatable';
-import { Column, PaginationData } from '@/types/datatable';
+import { ActionButton, Column, PaginationData } from '@/types/datatable';
 
 interface User {
     id: number;
     name: string;
     email: string;
-    status: 'active' | 'inactive' | 'pending';
     created_at: string;
 }
 
@@ -23,14 +22,8 @@ interface Props {
     sort: { column: string; direction: 'asc' | 'desc' };
 }
 
-type ActionButton = {
-    label: string;
-    onClick: () => void;
-    icon?: LucideIcon;
-    variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
-    confirm?: boolean;
-};
-export default function Index({ users,pagination, filters, sort }: Props) {
+
+export default function Index({ users, pagination, filters, sort }: Props) {
     const actions: ActionButton[] = [
         {
             label: "Edit",

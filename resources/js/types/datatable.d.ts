@@ -25,3 +25,12 @@ export interface DataTableProps {
     filters?: Record<string, any>;
     sort?: { column: string; direction: 'asc' | 'desc' };
 }
+
+
+type ActionButton = {
+    label: string;
+    onClick: () => void;
+    icon?: LucideIcon;
+    variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
+    confirm?: boolean;
+};

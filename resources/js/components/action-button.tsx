@@ -50,7 +50,7 @@ export default function ActionButtons({ actions }: ActionButtonsProps) {
     return (
         <div className="flex items-center gap-2">
             {
-                actions.length < 2 ? (
+                actions.length <= 2 ? (
                     actions.map((action) => {
                         const Icon = action.icon;
                         return (
