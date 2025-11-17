@@ -37,14 +37,14 @@ class TestController extends Controller
         ];
 
         return Inertia::render('User', [
-            'users' => [
-                'data' => $users,
+            'users' => $users,
+            'pagination' => [
                 'current_page' => 1,
                 'from' => 1,
                 'last_page' => 1,
                 'per_page' => 10,
                 'to' => 4,
-                'total' => count($users),
+                'total' => count($users)
             ],
             'filters' => $request->only(['search', 'created_at']),
             'sort' => [

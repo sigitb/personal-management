@@ -1,12 +1,11 @@
-import { Head } from '@inertiajs/react';
-import { Badge } from '@/components/ui/badge';
-import { DataTable, Column } from '@/components/datatable';
+
 // import { BreadcrumbItem } from '@/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Eye, LucideIcon, Pencil, Trash } from 'lucide-react';
 import ActionButtons from '@/components/action-button';
 import AppLayout from '@/Layouts/AppLayout';
-import { BreadcrumbItem } from '@/types/breadcrumb';
+import { DataTable } from '@/components/Datatable';
+import { Column, PaginationData } from '@/types/datatable';
 
 interface User {
     id: number;
@@ -16,18 +15,10 @@ interface User {
     created_at: string;
 }
 
-interface PaginatedData {
-    data: User[];
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    total: number;
-    from: number;
-    to: number;
-}
 
 interface Props {
-    users: PaginatedData;
+    users: User[];
+    pagination: PaginationData;
     filters: Record<string, any>;
     sort: { column: string; direction: 'asc' | 'desc' };
 }
@@ -39,7 +30,7 @@ type ActionButton = {
     variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
     confirm?: boolean;
 };
-export default function Index({ users, filters, sort }: Props) {
+export default function Index({ users,pagination, filters, sort }: Props) {
     const actions: ActionButton[] = [
         {
             label: "Edit",
@@ -104,24 +95,17 @@ export default function Index({ users, filters, sort }: Props) {
     return (
         <AppLayout>
             <>
-            <Card className='shadow-lg'>
-                <CardContent>
-                    <DataTable
-                        columns={columns}
-                        data={users.data}
-                        pagination={{
-                            current_page: users.current_page,
-                            last_page: users.last_page,
-                            per_page: users.per_page,
-                            total: users.total,
-                            from: users.from,
-                            to: users.to,
-                        }}
-                        filters={filters}
-                        sort={sort}
-                    />
-                </CardContent>
-            </Card>
+                <Card className='shadow-lg'>
+                    <CardContent>
+                        <DataTable
+                            columns={columns}
+                            data={users}
+                            pagination={pagination}
+                            filters={filters}
+                            sort={sort}
+                        />
+                    </CardContent>
+                </Card>
             </>
         </AppLayout>
     );
