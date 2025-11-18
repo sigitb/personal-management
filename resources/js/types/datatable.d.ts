@@ -2,9 +2,6 @@ export interface Column {
     key: string;
     label: string;
     sortable?: boolean;
-    filterable?: boolean;
-    filterType?: 'text' | 'select' | 'date';
-    filterOptions?: { value: string; label: string }[];
     pinnable?: boolean;
     render?: (value: any, row: any) => React.ReactNode;
 }
@@ -23,17 +20,23 @@ export interface DataTableProps {
     data: T[];
     pagination: PaginationData;
     filters?: Record<string, any>;
+    configFilter?:ConfigFilter[];
     sort?: { column: string; direction: 'asc' | 'desc' };
 }
 
 
-type ActionButton = {
+export type ActionButton = {
     label: string;
-    onClick: () => void;
+    onClick: (id: number | string) => void;
     icon?: LucideIcon;
     variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
     confirm?: boolean;
 };
+
+export interface ActionButtonsProps {
+    id: number | string;
+    actions: ActionButton[];
+}
 
 export interface TablePaginationProps {
     pagination: PaginationData;
@@ -58,9 +61,16 @@ export interface TableHeaderRowProps {
     headerRefs: React.MutableRefObject<Record<string, HTMLTableCellElement | null>>;
     getPinnedLeft: (columnKey: string) => number;
 }
+export interface ConfigFilter {
+    key: string;
+    label: string;
+    placeholder?: string;
+    filterType?: 'text' | 'select' | 'date';
+    filterOptions?: { value: string; label: string }[];
+}
 
-interface TableFiltersProps {
-    columns: Column[];
+export interface TableFiltersProps {
+    configFilter?: ConfigFilter[];
     filters: Record<string, any>;
     onFiltersChange: (filters: Record<string, any>) => void;
     onApply: () => void;

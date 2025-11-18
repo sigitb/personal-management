@@ -46,7 +46,7 @@ class TestController extends Controller
                 'to' => 4,
                 'total' => count($users)
             ],
-            'filters' => $request->only(['search', 'created_at']),
+            'filters' => $request->only(['email', 'name']),
             'sort' => [
                 'column' => $request->get('sort_by', ''),
                 'direction' => $request->get('sort_direction', 'asc'),

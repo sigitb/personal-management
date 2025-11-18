@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { router } from '@inertiajs/react';
 import { Column, DataTableProps } from '@/types/datatable';
-import { Table } from '../ui/table';
+import { Table, TableHeader } from '../ui/table';
 import { TableHeaderRow } from './table-header';
 import { TableBodyContent } from './table-body';
 import { TablePagination } from './table-pagination';
@@ -10,6 +10,7 @@ import { TableFilters } from './table-filter';
 
 export function DataTable({
     columns,
+    configFilter,
     data,
     pagination,
     filters = {},
@@ -23,7 +24,8 @@ export function DataTable({
     );
     const headerRefs = useRef<Record<string, HTMLTableCellElement | null>>({});
     const tableContainerRef = useRef<HTMLDivElement>(null);
-
+    console.log(filters);
+    
     // Measure column widths
     useEffect(() => {
         const measureWidths = () => {
@@ -138,22 +140,22 @@ export function DataTable({
     return (
         <div className="space-y-4 w-full">
             {/* Filters */}
-            <TableFilters
-                columns={columns}
+            {/* <TableFilters
+                configFilter={configFilter}
                 filters={localFilters}
                 onFiltersChange={setLocalFilters}
                 onApply={applyFilters}
                 onReset={resetFilters}
-            />
+            /> */}
 
             {/* Table */}
             <div
                 ref={tableContainerRef}
-                className="rounded-md border overflow-x-auto relative w-full"
+                className="rounded-xl border overflow-x-auto relative w-full"
                 style={{ maxWidth: '100%' }}
             >
                 <Table className="relative">
-
+                    <TableHeader>
                     <TableHeaderRow
                         columns={sortedColumns}
                         sortConfig={sortConfig}
@@ -164,6 +166,7 @@ export function DataTable({
                         headerRefs={headerRefs}
                         getPinnedLeft={getPinnedLeft}
                     />
+                    </TableHeader>
                     <TableBodyContent
                         columns={sortedColumns}
                         data={data}
@@ -174,11 +177,11 @@ export function DataTable({
             </div>
 
             {/* Pagination */}
-            <TablePagination
+            {/* <TablePagination
                 pagination={pagination}
                 onPageChange={handlePageChange}
                 onPerPageChange={handlePerPageChange}
-            />
+            /> */}
         </div>
     );
 }

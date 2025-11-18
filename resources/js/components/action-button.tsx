@@ -1,13 +1,6 @@
+// components/action-buttons/ActionButtons.tsx
 "use client";
 
-import { useState } from "react";
-import { MoreHorizontal } from "lucide-react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -18,96 +11,85 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import type { LucideIcon } from "lucide-react";
 
-type ActionButton = {
-    label: string;
-    onClick: () => void;
-    icon?: LucideIcon;
-    variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
-    confirm?: boolean;
-};
+import { MoreHorizontal } from "lucide-react";
+import { ActionButton, ActionButtonsProps } from "@/types/datatable";
+import { useConfirmation } from "@/hooks/use-confirmatio";
 
-interface ActionButtonsProps {
-    actions: ActionButton[];
-}
-
-export default function ActionButtons({ actions }: ActionButtonsProps) {
-    const [confirmAction, setConfirmAction] = useState<ActionButton | null>(null);
-
-    const visibleButtons = actions.slice(0, 2);
-    const extraButtons = actions.slice(2);
+export default function ActionButtons({ id, actions }: ActionButtonsProps) {
+    const { confirmAction, requestConfirmation, clearConfirmation } = useConfirmation();
 
     const handleActionClick = (action: ActionButton) => {
         if (action.confirm) {
-            setConfirmAction(action);
+            requestConfirmation(action);
         } else {
-            action.onClick();
+            action.onClick(id);
         }
     };
 
     return (
         <div className="flex items-center gap-2">
-            {
-                actions.length <= 2 ? (
-                    actions.map((action) => {
-                        const Icon = action.icon;
-                        return (
-                            <Button
-                                key={action.label}
-                                variant={action.variant ?? "default"}
-                                size="sm"
-                                onClick={() => handleActionClick(action)}
-                            >
-                                {Icon && <Icon size={16} className="mr-1" />}
-                                {action.label}
-                            </Button>
-                        );
-                    })
-                ) : (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <MoreHorizontal size={16} />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            {actions.map((action) => {
-                                const Icon = action.icon;
-                                return (
-                                    <DropdownMenuItem
-                                        key={action.label}
-                                        onClick={() => handleActionClick(action)}
-                                    >
-                                        {Icon && <Icon size={16} className="mr-2" />}
-                                        {action.label}
-                                    </DropdownMenuItem>
-                                );
-                            })}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                )
-            }
+            {actions.length <= 2 ? (
+                actions.map((action) => {
+                    const Icon = action.icon;
 
-            {/* Modal konfirmasi untuk aksi yang butuh konfirmasi */}
+                    return (
+                        <Button
+                            key={action.label}
+                            variant={action.variant ?? "default"}
+                            size="sm"
+                            onClick={() => handleActionClick(action)}
+                        >
+                            {Icon && <Icon size={16} className="mr-1" />}
+                            {action.label}
+                        </Button>
+                    );
+                })
+            ) : (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm">
+                            <MoreHorizontal size={16} />
+                        </Button>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent align="end">
+                        {actions.map((action) => {
+                            const Icon = action.icon;
+                            return (
+                                <DropdownMenuItem
+                                    key={action.label}
+                                    onClick={() => handleActionClick(action)}
+                                >
+                                    {Icon && <Icon size={16} className="mr-2" />}
+                                    {action.label}
+                                </DropdownMenuItem>
+                            );
+                        })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )}
+
             {confirmAction && (
-                <AlertDialog open={!!confirmAction} onOpenChange={() => setConfirmAction(null)}>
+                <AlertDialog open={!!confirmAction} onOpenChange={clearConfirmation}>
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>Konfirmasi Aksi</AlertDialogTitle>
                             <AlertDialogDescription>
-                                Apakah kamu yakin ingin melakukan aksi{" "}
-                                <strong>{confirmAction.label}</strong>?
-                                Tindakan ini mungkin tidak dapat dibatalkan.
+                                Apakah Anda yakin ingin menjalankan aksi{" "}
+                                <strong>{confirmAction.label}</strong>? Tindakan ini mungkin tidak dapat dibatalkan.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
+
                         <AlertDialogFooter>
                             <AlertDialogCancel>Batal</AlertDialogCancel>
                             <AlertDialogAction
                                 onClick={() => {
-                                    confirmAction.onClick();
-                                    setConfirmAction(null);
+                                    confirmAction.onClick(id);
+                                    clearConfirmation();
                                 }}
                             >
                                 Lanjutkan

@@ -8,6 +8,7 @@ export function TableBodyContent({
     pinnedColumns,
     getPinnedLeft,
 }: TableBodyContentProps) {
+    let no = 1;
     if (data.length === 0) {
         return (
             <TableBody>
@@ -15,7 +16,6 @@ export function TableBodyContent({
                     <TableCell colSpan={columns.length} className="text-center h-32">
                         <div className="flex flex-col items-center justify-center text-muted-foreground">
                             <p className="text-lg font-medium">No data available</p>
-                            <p className="text-sm">Try adjusting your filters</p>
                         </div>
                     </TableCell>
                 </TableRow>
@@ -48,7 +48,9 @@ export function TableBodyContent({
                                         : {}
                                 }
                             >
-                                {col.render ? col.render(row[col.key], row) : row[col.key]}
+                                {
+                                    col.key == 'no' ? no++ : col.render ? col.render(row[col.key], row) : row[col.key]
+                                }
                             </TableCell>
                         );
                     })}

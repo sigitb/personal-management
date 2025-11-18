@@ -11,11 +11,8 @@ import {
 import { SlidersHorizontal, X } from 'lucide-react';
 import { TableFiltersProps } from '@/types/datatable';
 
-
-
-
 export function TableFilters({
-    columns,
+    configFilter,
     filters,
     onFiltersChange,
     onApply,
@@ -23,7 +20,7 @@ export function TableFilters({
 }: TableFiltersProps) {
     const [showFilters, setShowFilters] = useState(false);
 
-    const filterableColumns = columns.filter((col) => col.filterable);
+    const filterableColumns = configFilter || [];
     const activeFiltersCount = Object.values(filters).filter(Boolean).length;
 
     if (filterableColumns.length === 0) return null;
