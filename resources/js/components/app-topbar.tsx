@@ -17,11 +17,11 @@ export default function Topbar() {
                 <div className="flex items-center gap-3 sm:gap-4 md:gap-6 flex-shrink-0">
                     {/* Notification Bell */}
                     <button 
-                        className="relative text-gray-600 hover:text-gray-800 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                        className="relative text-gray-400 hover:text-gray-800 transition-colors p-2 hover:bg-gray-100 rounded-full"
                         aria-label="Notifications"
                     >
-                        <Bell className="h-5 w-5 sm:h-6 sm:w-6" />
-                        <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+                        <Bell className="h-5 w-5 sm:h-5 sm:w-5" />
+                        <span className="absolute top-1 right-1 h-1/5 w-1/5 rounded-full bg-red-500 ring-2 ring-white"></span>
                     </button>
 
                     {/* User Dropdown */}
@@ -31,17 +31,17 @@ export default function Topbar() {
                                 <img
                                     src="https://ui-avatars.com/api/?name=John+Doe"
                                     alt="User Avatar"
-                                    className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 rounded-full ring-2 ring-gray-200 hover:ring-primary transition-all cursor-pointer"
+                                    className="h-4 w-4 sm:h-5 sm:w-5 md:h-8 md:w-8 rounded-full ring-2 ring-gray-200 hover:ring-primary transition-all cursor-pointer"
                                 />
                             </button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="w-56 sm:w-64 rounded-lg" align="end" sideOffset={8}>
+                        <DropdownMenuContent className="w-56 sm:w-64 rounded-xl" align="end" sideOffset={8}>
                             {/* User Info Header */}
                             <div className="flex gap-3 p-3 hover:bg-accent/50 rounded-t-lg transition-colors">
                                 <img
                                     src="https://ui-avatars.com/api/?name=John+Doe"
                                     alt="User Avatar" 
-                                    className="h-10 w-10 rounded-lg ring-2 ring-gray-200 flex-shrink-0" 
+                                    className="h-10 w-10 rounded-xl ring-2 ring-gray-200 flex-shrink-0" 
                                 />
                                 <div className="grid flex-1 text-left text-sm leading-tight overflow-hidden">
                                     <span className="truncate font-semibold text-foreground">John Doe</span>

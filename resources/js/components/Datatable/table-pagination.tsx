@@ -6,14 +6,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { PaginationData } from '@/types/datatable';
+import { TablePaginationProps } from '@/types/datatable';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface TablePaginationProps {
-    pagination: PaginationData;
-    onPageChange: (page: number) => void;
-    onPerPageChange: (perPage: string) => void;
-}
+
 
 export function TablePagination({
     pagination,

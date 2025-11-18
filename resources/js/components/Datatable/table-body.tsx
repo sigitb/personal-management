@@ -1,12 +1,6 @@
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
-import { Column } from '@/types/datatable';
+import { TableBodyContentProps } from '@/types/datatable';
 
-interface TableBodyContentProps {
-    columns: Column[];
-    data: any[];
-    pinnedColumns: string[];
-    getPinnedLeft: (columnKey: string) => number;
-}
 
 export function TableBodyContent({
     columns,

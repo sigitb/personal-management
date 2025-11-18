@@ -9,16 +9,10 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { SlidersHorizontal, X } from 'lucide-react';
-import { Column } from '@/types/datatable';
+import { TableFiltersProps } from '@/types/datatable';
 
 
-interface TableFiltersProps {
-    columns: Column[];
-    filters: Record<string, any>;
-    onFiltersChange: (filters: Record<string, any>) => void;
-    onApply: () => void;
-    onReset: () => void;
-}
+
 
 export function TableFilters({
     columns,

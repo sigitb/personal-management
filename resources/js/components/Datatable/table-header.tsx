@@ -1,17 +1,8 @@
 import { TableHead, TableRow } from '@/components/ui/table';
-import { Column } from '@/types/datatable';
+import { TableHeaderRowProps } from '@/types/datatable';
 import { ChevronDown, ChevronUp, ChevronsUpDown, Pin, PinOff } from 'lucide-react';
 
-interface TableHeaderRowProps {
-    columns: Column[];
-    sortConfig: { column: string; direction: 'asc' | 'desc' };
-    pinnedColumns: string[];
-    columnWidths: Record<string, number>;
-    onSort: (columnKey: string) => void;
-    onTogglePin: (columnKey: string) => void;
-    headerRefs: React.MutableRefObject<Record<string, HTMLTableCellElement | null>>;
-    getPinnedLeft: (columnKey: string) => number;
-}
+
 
 export function TableHeaderRow({
     columns,

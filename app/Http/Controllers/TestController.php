@@ -20,19 +20,19 @@ class TestController extends Controller
                 'id' => 2,
                 'name' => 'Jane Doe 1',
                 'email' => 'janeKZ0dX@example.com',
-                'created_at' => now()
+                'created_at' => now()->subDay(1)
             ],
             [
                 'id' => 3,
                 'name' => 'John Doe2',
                 'email' => 'KZ0dX@example.com',
-                'created_at' => now()
+                'created_at' => now()->subDay(2)
             ],
             [
                 'id' => 4,
                 'name' => 'Jane Doe 3',
                 'email' => 'janeKZ0dX@example.com',
-                'created_at' => now()
+                'created_at' => now()->subDay(3)
             ],
         ];
 
