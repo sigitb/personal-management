@@ -6,6 +6,7 @@ import { TableHeaderRow } from './table-header';
 import { TableBodyContent } from './table-body';
 import { TablePagination } from './table-pagination';
 import { TableFilters } from './table-filter';
+import { Card, CardContent } from '../ui/card';
 
 
 export function DataTable({
@@ -24,8 +25,7 @@ export function DataTable({
     );
     const headerRefs = useRef<Record<string, HTMLTableCellElement | null>>({});
     const tableContainerRef = useRef<HTMLDivElement>(null);
-    console.log(filters);
-    
+
     // Measure column widths
     useEffect(() => {
         const measureWidths = () => {
@@ -138,50 +138,54 @@ export function DataTable({
     ];
 
     return (
-        <div className="space-y-4 w-full">
-            {/* Filters */}
-            {/* <TableFilters
-                configFilter={configFilter}
-                filters={localFilters}
-                onFiltersChange={setLocalFilters}
-                onApply={applyFilters}
-                onReset={resetFilters}
-            /> */}
+        <Card>
+            <CardContent>
+                <div className="space-y-4 w-full">
+                    {/* Filters */}
+                    {/* <TableFilters
+                        configFilter={configFilter}
+                        filters={localFilters}
+                        onFiltersChange={setLocalFilters}
+                        onApply={applyFilters}
+                        onReset={resetFilters}
+                    /> */}
 
-            {/* Table */}
-            <div
-                ref={tableContainerRef}
-                className="rounded-xl border overflow-x-auto relative w-full"
-                style={{ maxWidth: '100%' }}
-            >
-                <Table className="relative">
-                    <TableHeader>
-                    <TableHeaderRow
-                        columns={sortedColumns}
-                        sortConfig={sortConfig}
-                        pinnedColumns={pinnedColumns}
-                        columnWidths={columnWidths}
-                        onSort={handleSort}
-                        onTogglePin={togglePinColumn}
-                        headerRefs={headerRefs}
-                        getPinnedLeft={getPinnedLeft}
-                    />
-                    </TableHeader>
-                    <TableBodyContent
-                        columns={sortedColumns}
-                        data={data}
-                        pinnedColumns={pinnedColumns}
-                        getPinnedLeft={getPinnedLeft}
-                    />
-                </Table>
-            </div>
+                    {/* Table */}
+                    <div
+                        ref={tableContainerRef}
+                        className="rounded-xl border overflow-x-auto relative w-full"
+                        style={{ maxWidth: '100%' }}
+                    >
+                        <Table className="relative">
+                            <TableHeader>
+                                <TableHeaderRow
+                                    columns={sortedColumns}
+                                    sortConfig={sortConfig}
+                                    pinnedColumns={pinnedColumns}
+                                    columnWidths={columnWidths}
+                                    onSort={handleSort}
+                                    onTogglePin={togglePinColumn}
+                                    headerRefs={headerRefs}
+                                    getPinnedLeft={getPinnedLeft}
+                                />
+                            </TableHeader>
+                            <TableBodyContent
+                                columns={sortedColumns}
+                                data={data}
+                                pinnedColumns={pinnedColumns}
+                                getPinnedLeft={getPinnedLeft}
+                            />
+                        </Table>
+                    </div>
 
-            {/* Pagination */}
-            {/* <TablePagination
-                pagination={pagination}
-                onPageChange={handlePageChange}
-                onPerPageChange={handlePerPageChange}
-            /> */}
-        </div>
+                    {/* Pagination */}
+                    <TablePagination
+                        pagination={pagination}
+                        onPageChange={handlePageChange}
+                        onPerPageChange={handlePerPageChange}
+                    />
+                </div>
+            </CardContent>
+        </Card>
     );
 }

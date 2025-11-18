@@ -1,74 +1,109 @@
-import { Button } from '@/components/ui/button';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import { TablePaginationProps } from '@/types/datatable';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
+import { TablePaginationProps } from "@/types/datatable";
 
 export function TablePagination({
     pagination,
     onPageChange,
-    onPerPageChange,
 }: TablePaginationProps) {
+
+    const { current_page, last_page } = pagination;
+
+    // ---- Generate pages with ellipsis ----
+    const generatePages = () => {
+        const pages: (number | "...")[] = [];
+
+        const first = 1;
+        const last = last_page;
+        const current = current_page;
+        pages.push(first);
+
+        if (current > first + 1) {
+            pages.push("...");
+        }
+
+        if (current !== first && current !== last) {
+            pages.push(current);
+        }
+
+        if (current < last - 1) {
+            pages.push("...");
+        }
+
+        if (last !== first) {
+            pages.push(last);
+        }
+
+        return pages;
+    };
+
+    const pages = generatePages();
+
     return (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4">
-            {/* Left side - Rows per page */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
-                <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground whitespace-nowrap">
-                        Rows per page:
-                    </span>
-                    <Select
-                        value={pagination.per_page.toString()}
-                        onValueChange={onPerPageChange}
-                    >
-                        <SelectTrigger className="w-[70px]">
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="10">10</SelectItem>
-                            <SelectItem value="25">25</SelectItem>
-                            <SelectItem value="50">50</SelectItem>
-                            <SelectItem value="100">100</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-                <span className="text-sm text-muted-foreground">
-                    Showing {pagination.from} to {pagination.to} of {pagination.total} entries
-                </span>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+
+            {/* Left side info */}
+            <div className="text-sm text-muted-foreground">
+                Showing {pagination.from} to {pagination.to} of {pagination.total} entries
             </div>
 
-            {/* Right side - Page navigation */}
+            {/* Right side pagination */}
             <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onPageChange(pagination.current_page - 1)}
-                    disabled={pagination.current_page === 1}
-                    className="gap-1"
-                >
-                    <ChevronLeft className="h-4 w-4" />
-                    Previous
-                </Button>
-                <span className="text-sm whitespace-nowrap px-2 font-medium">
-                    Page {pagination.current_page} of {pagination.last_page}
-                </span>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => onPageChange(pagination.current_page + 1)}
-                    disabled={pagination.current_page === pagination.last_page}
-                    className="gap-1"
-                >
-                    Next
-                    <ChevronRight className="h-4 w-4" />
-                </Button>
+                <Pagination>
+                    <PaginationContent className="text-sm">
+
+                        {/* Previous button */}
+                        <PaginationItem className="text-sm">
+                            <PaginationPrevious
+                                onClick={() => current_page > 1 && onPageChange(current_page - 1)}
+                                className={cn(
+                                    "rounded-[7px] hover:text-primary",
+                                    current_page === 1 && "pointer-events-none opacity-50"
+                                )}
+                            />
+                        </PaginationItem>
+
+                        {/* Page numbers + ellipsis */}
+                        {pages.map((page, i) => (
+                            <PaginationItem key={i} className="text-sm">
+                                {page === "..." ? (
+                                    <span className="px-2 text-muted-foreground select-none">…</span>
+                                ) : (
+                                    <PaginationLink
+                                        onClick={() => onPageChange(page)}
+                                        isActive={page === current_page}
+                                        className={cn(
+                                            "rounded-[7px] size-7 hover:text-primary",
+                                            page === current_page &&
+                                            "bg-primary text-white hover:bg-primary hover:text-white"
+                                        )}
+                                    >
+                                        {page}
+                                    </PaginationLink>
+                                )}
+                            </PaginationItem>
+                        ))}
+
+                        {/* Next button */}
+                        <PaginationItem>
+                            <PaginationNext
+                                onClick={() => current_page < last_page && onPageChange(current_page + 1)}
+                                className={cn(
+                                    "rounded-[7px] hover:text-primary text-sm",
+                                    current_page === last_page && "pointer-events-none opacity-50"
+                                )}
+                            />
+                        </PaginationItem>
+
+                    </PaginationContent>
+                </Pagination>
             </div>
         </div>
     );

@@ -95,18 +95,14 @@ export default function Index({ users, pagination, filters, sort }: Props) {
   return (
     <AppLayout>
       <>
-        <Card className='shadow-lg'>
-          <CardContent>
-            <DataTable
-              columns={columns}
-              data={users}
-              pagination={pagination}
-              filters={filters}
-              sort={sort}
-              configFilter={configFilters}
-            />
-          </CardContent>
-        </Card>
+        <DataTable
+          columns={columns}
+          data={users}
+          pagination={pagination}
+          filters={filters}
+          sort={sort}
+          configFilter={configFilters}
+        />
       </>
     </AppLayout>
   );
