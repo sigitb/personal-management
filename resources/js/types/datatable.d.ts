@@ -44,7 +44,7 @@ export interface ActionButtonsProps {
 export interface TablePaginationProps {
     pagination: PaginationData;
     onPageChange: (page: number) => void;
-    onPerPageChange: (perPage: string) => void;
+    onPerPageChange: (perPage: number) => void;
 }
 
 export interface TableBodyContentProps {
@@ -68,7 +68,7 @@ export interface ConfigFilter {
     key: string;
     label: string;
     placeholder?: string;
-    filterType?: 'text' | 'select' | 'date';
+    filterType?: "text" | "number" | "select" | "multiple-select" | "select-search" | "date" | "date-range";
     filterOptions?: { value: string; label: string }[];
 }
 
@@ -83,7 +83,7 @@ export interface TableFiltersProps {
 export interface ActionInputField {
     name: string;                         // key
     label: string;                        // label di form
-    type: "text" | "textarea" | "number" | "select" | "checkbox";
+    type: "text" | "textarea" | "number" | "select" | "checkbox" | "multiple-select" | "select-search" | "date" | 'date-range';
     placeholder?: string;
     options?: { label: string; value: string | number }[]; // untuk select
 }

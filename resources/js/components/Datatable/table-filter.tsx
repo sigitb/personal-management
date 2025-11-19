@@ -1,15 +1,9 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import { SlidersHorizontal, X } from 'lucide-react';
-import { TableFiltersProps } from '@/types/datatable';
+import { ConfigFilter, TableFiltersProps } from '@/types/datatable';
+import { MultiSelectSearch, NormalSelect, SingleSelectSearch } from '../select-all';
+import { Option } from '@/types/select';
+import { DatePicker, DateRangePicker } from '../datepicker';
 
 export function TableFilters({
     configFilter,
@@ -18,87 +12,140 @@ export function TableFilters({
     onApply,
     onReset,
 }: TableFiltersProps) {
-    const [showFilters, setShowFilters] = useState(false);
-
     const filterableColumns = configFilter || [];
-    const activeFiltersCount = Object.values(filters).filter(Boolean).length;
 
     if (filterableColumns.length === 0) return null;
+    interface DateRange {
+        from: Date | undefined;
+        to?: Date | undefined;
+    }
 
-    const handleFilterChange = (key: string, value: string) => {
+    type FilterValue = string | number | Date | string[] | number[] | DateRange | undefined;
+
+    const handleFilterChange = (key: string, value: FilterValue) => {
         onFiltersChange({ ...filters, [key]: value });
     };
 
+    const handleFormFilter = ({
+        label,
+        placeholder,
+        key,
+        filterOptions,
+        filterType
+    }: ConfigFilter) => {
+        switch (filterType) {
+            case "select":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <NormalSelect
+                            options={filterOptions as Option[]}
+                            onChange={(value) => handleFilterChange(key, value)}
+                            placeholder={placeholder}
+                            value={filters[key] || ""}
+                        />
+                    </div>
+                );
+            case "multiple-select":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <MultiSelectSearch
+                            options={filterOptions as Option[]}
+                            onChange={(value) => handleFilterChange(key, value)}
+                            placeholder={placeholder}
+                            value={filters[key] || ""}
+                        />
+                    </div>
+                );
+            case "select-search":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <SingleSelectSearch
+                            options={filterOptions as Option[]}
+                            onChange={(value) => handleFilterChange(key, value)}
+                            placeholder={placeholder}
+                            value={filters[key] || ""}
+                        />
+                    </div>
+                );
+            case "date":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <DatePicker key={key} placeholder={`pilih tanggal....`} value={filters[key] || ''} onChange={(value) => handleFilterChange(key, value)} />
+                    </div>
+                )
+                case "date-range":
+                    return (
+                        <div className="space-y-2">
+                            <label htmlFor={key} className="text-sm font-medium">
+                                {label}
+                            </label>
+                            <DateRangePicker key={key} placeholder={`pilih tanggal....`} value={filters[key] || ''} onChange={(value) => handleFilterChange(key, value)} />
+                        </div>
+                    )
+    
+            case "number":
+            case "text":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <Input
+                            className='rounded-[7px]'
+                            size={10}
+                            id={key}
+                            type={filterType}
+                            placeholder={placeholder}
+                            value={filters[key] || ""}
+                            onChange={(e) => handleFilterChange(key, e.target.value)}
+                        />
+                    </div>
+                );
+
+            default:
+                return null;
+        }
+    };
+
     return (
-        <div className="space-y-3">
-            <div className="flex items-center justify-between">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowFilters(!showFilters)}
-                    className="gap-2"
-                >
-                    <SlidersHorizontal className="h-4 w-4" />
-                    Filters
-                    {activeFiltersCount > 0 && (
-                        <span className="ml-1 rounded-full bg-primary text-primary-foreground px-2 py-0.5 text-xs font-medium">
-                            {activeFiltersCount}
-                        </span>
-                    )}
-                </Button>
-                {activeFiltersCount > 0 && (
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={onReset}
-                        className="gap-2"
-                    >
-                        <X className="h-4 w-4" />
-                        Reset
-                    </Button>
-                )}
+        <div className="w-full mt-3 bg-card border border-gray-700 rounded-[7px] p-4 space-y-4">
+            <div className="flex flex-wrap gap-4 items-end">
+                {filterableColumns.map((col) => (
+                    <div key={col.key} className="mb-2">
+                        {handleFormFilter(col)}
+                    </div>
+                ))}
             </div>
 
-            {showFilters && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 border rounded-lg bg-muted/50">
-                    {filterableColumns.map((col) => (
-                        <div key={col.key} className="space-y-2">
-                            <label className="text-sm font-medium">{col.label}</label>
-                            {col.filterType === 'select' && col.filterOptions ? (
-                                <Select
-                                    value={filters[col.key] || ''}
-                                    onValueChange={(value) => handleFilterChange(col.key, value)}
-                                >
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue placeholder={`Filter ${col.label}`} />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="">All</SelectItem>
-                                        {col.filterOptions.map((opt) => (
-                                            <SelectItem key={opt.value} value={opt.value}>
-                                                {opt.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            ) : (
-                                <Input
-                                    type={col.filterType || 'text'}
-                                    placeholder={`Filter ${col.label}`}
-                                    value={filters[col.key] || ''}
-                                    onChange={(e) => handleFilterChange(col.key, e.target.value)}
-                                    className="w-full"
-                                />
-                            )}
-                        </div>
-                    ))}
-                    <div className="flex items-end">
-                        <Button onClick={onApply} className="w-full">
-                            Apply Filters
-                        </Button>
-                    </div>
-                </div>
-            )}
+            <div className="flex justify-end gap-2 pt-2">
+                <Button
+                    onClick={onApply}
+                    size="sm"
+                    className='rounded-[7px]'
+                >
+                    Apply Filters
+                </Button>
+                <Button
+                    onClick={onReset}
+                    variant='outline'
+                    size="sm"
+                    className='rounded-[7px] text-primary border-primary hover:bg-primary hover:text-primary-foreground'
+                >
+                    Reset Filters
+                </Button>
+            </div>
         </div>
     );
 }

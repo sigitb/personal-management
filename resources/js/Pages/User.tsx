@@ -29,21 +29,40 @@ export default function Index({ users, pagination, filters, sort }: Props) {
     {
       label: "Edit",
       icon: Pencil,
-      textColor:"text-green-400",
+      textColor: "text-green-400",
       onClick: (id) => router.get(`/users/${id}/edit`),
     },
     {
       label: "Lihat",
       icon: Eye,
-      textColor:"text-cyan-400",
+      textColor: "text-cyan-400",
       onClick: (id) => router.get(`/users/${id}`),
     },
     {
       label: "Hapus",
       icon: Trash,
-      textColor:"text-red-400",
+      textColor: "text-red-400",
       confirm: true,
       onClick: (id) => router.delete(`/users/${id}`),
+      // confirmWithForm: true,
+      // inputs: [
+      //   {
+      //     name: "status",
+      //     label: "Status Baru",
+      //     type: "select",
+      //     options: [
+      //       { label: "Menunggu", value: "pending" },
+      //       { label: "Diproses", value: "processing" },
+      //       { label: "Selesai", value: "done" },
+      //     ],
+      //   },
+      //   {
+      //     name: "note",
+      //     label: "Catatan",
+      //     type: "textarea",
+      //     placeholder: "Masukkan catatan...",
+      //   },
+      // ]
     },
   ];
 
@@ -91,6 +110,51 @@ export default function Index({ users, pagination, filters, sort }: Props) {
       label: "Name",
       placeholder: "Name.....",
       filterType: "text"
+    },
+    {
+      key: "date",
+      label: "Tanggal",
+      placeholder: "date.....",
+      filterType: "date"
+    },
+    {
+      key: "date-range",
+      label: "Tanggal range",
+      placeholder: "date.....",
+      filterType: "date-range"
+    },
+    {
+      key: "status",
+      label: "Status",
+      placeholder: "Pilih Status.....",
+      filterType: "multiple-select",
+      filterOptions: [
+        { label: "test", value: "test" },
+        { label: "test1", value: "test1" },
+        { label: "test2", value: "test2" }
+      ]
+    },
+    {
+      key: "status-te",
+      label: "Status te",
+      placeholder: "Pilih Status.....",
+      filterType: "select",
+      filterOptions: [
+        { label: "test", value: "test" },
+        { label: "test1", value: "test1" },
+        { label: "test2", value: "test2" }
+      ]
+    },
+    {
+      key: "status-re",
+      label: "Status re",
+      placeholder: "Pilih Status.....",
+      filterType: "select-search",
+      filterOptions: [
+        { label: "test", value: "test" },
+        { label: "test1", value: "test1" },
+        { label: "test2", value: "test2" }
+      ]
     },
   ]
 

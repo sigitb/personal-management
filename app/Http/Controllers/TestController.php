@@ -9,6 +9,7 @@ class TestController extends Controller
 {
     public function index(Request $request)
     {
+        info($request->all());
         $users = [
             [
                 'id' => 1,
@@ -46,7 +47,7 @@ class TestController extends Controller
                 'to' => 4,
                 'total' => count($users)
             ],
-            'filters' => $request->only(['email', 'name']),
+            'filters' => $request->only(['email', 'name', 'search', 'date', 'date-range']),
             'sort' => [
                 'column' => $request->get('sort_by', ''),
                 'direction' => $request->get('sort_direction', 'asc'),
