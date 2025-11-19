@@ -8,7 +8,7 @@ interface RowPerPageProps {
 
 export function RowPerPage({ value, onChange, options = [10, 25, 50, 100] }: RowPerPageProps) {
   return (
-    <div className="flex items-center gap-2 justify-end">
+    <div className="flex items-center gap-2">
       <span className="text-sm text-muted-foreground">per page</span>
 
       <Select

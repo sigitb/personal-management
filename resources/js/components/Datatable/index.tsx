@@ -6,7 +6,7 @@ import { TableHeaderRow } from './table-header';
 import { TableBodyContent } from './table-body';
 import { TablePagination } from './table-pagination';
 import { TableFilters } from './table-filter';
-import { Card, CardContent } from '../ui/card';
+import { Card, CardContent, CardHeader } from '../ui/card';
 import { RowPerPage } from './tabel-row-page';
 import { Filter, Search } from 'lucide-react';
 import { Input } from '../ui/input';
@@ -147,52 +147,52 @@ export function DataTable({
 
     return (
         <>
-            <Card className='mb-2 py-3'>
-                {/* Filters */}
-                <CardContent className='px-3'>
-                    <div className="flex items-center justify-between">
-                        <div className='flex items-center gap-2'>
-                            <DefaultSearch
-                                filters={filters}
-                                onApply={applyFilters}
-                                onFiltersChange={setLocalFilters}
-                            />
-                            {
-                                configFilter && (
-                                    <Button
-                                        variant={'outline'}
-                                        size="sm"
-                                        className={cn('h-8 px-2 py-1 rounded-[7px] hover:bg-primary', (showFilters || activeFiltersCount > 0) ? 'bg-primary' : 'text-primary border-primary')}
-                                        onClick={() => setShowFilters(!showFilters)}>
-                                        <Filter className='h-3.5 w-3.5 mr-1.5' />
-                                        {(showFilters || activeFiltersCount > 0) ? 'Hide Filter' : 'Filter'}
-                                        {activeFiltersCount > 0 && (
-                                            <span className='ml-1 bg-primary-foreground text-primary rounded-full w-5 h-5 flex items-center justify-center text-xs'>
-                                                {activeFiltersCount}
-                                            </span>
-                                        )}
-                                    </Button>
-                                )
-                            }
-                        </div>
-                        <div className='flex items-center gap-2'>
-                            <RowPerPage onChange={handlePerPageChange} value={pagination.per_page} />
-                        </div>
-                    </div>
-                    {(showFilters || activeFiltersCount > 0) && (
-                        <TableFilters
-                            configFilter={configFilter}
-                            filters={localFilters}
-                            onFiltersChange={setLocalFilters}
-                            onApply={applyFilters}
-                            onReset={resetFilters}
-                        />
-                    )}
-                </CardContent>
-            </Card>
             <Card className='py-3'>
-                <CardContent className='px-3'>
+                <CardContent className='px-3 py-1'>
+
                     <div className="space-y-4 w-full">
+                        {/* filter & perpage & button import, export */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                            <div className="col-span-2">
+                                <div className="flex lg:flex-row gap-2 flex-wrap">
+                                    <DefaultSearch
+                                        filters={filters}
+                                        onApply={applyFilters}
+                                        onFiltersChange={setLocalFilters}
+                                    />
+                                    {
+                                        configFilter && (
+                                            <Button
+                                                variant={'outline'}
+                                                size="sm"
+                                                className={cn('h-8 px-2 py-1 rounded-[7px] hover:bg-primary', (showFilters || activeFiltersCount > 0) ? 'bg-primary' : 'text-primary border-primary')}
+                                                onClick={() => setShowFilters(!showFilters)}>
+                                                <Filter className='h-3.5 w-3.5 mr-1.5' />
+                                                {(showFilters || activeFiltersCount > 0) ? 'Hide Filter' : 'Filter'}
+                                                {activeFiltersCount > 0 && (
+                                                    <span className='ml-1 bg-primary-foreground text-primary rounded-full w-5 h-5 flex items-center justify-center text-xs'>
+                                                        {activeFiltersCount}
+                                                    </span>
+                                                )}
+                                            </Button>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                            <div className="flex lg:justify-end md:justify-end">
+                                <RowPerPage onChange={handlePerPageChange} value={pagination.per_page} />
+                            </div>
+                        </div>
+
+                        {(showFilters || activeFiltersCount > 0) && (
+                            <TableFilters
+                                configFilter={configFilter}
+                                filters={localFilters}
+                                onFiltersChange={setLocalFilters}
+                                onApply={applyFilters}
+                                onReset={resetFilters}
+                            />
+                        )}
                         {/* Table */}
                         <div
                             ref={tableContainerRef}
