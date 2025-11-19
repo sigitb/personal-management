@@ -29,18 +29,20 @@ export default function Index({ users, pagination, filters, sort }: Props) {
     {
       label: "Edit",
       icon: Pencil,
+      textColor:"text-green-400",
       onClick: (id) => router.get(`/users/${id}/edit`),
     },
     {
       label: "Lihat",
       icon: Eye,
+      textColor:"text-cyan-400",
       onClick: (id) => router.get(`/users/${id}`),
     },
     {
       label: "Hapus",
       icon: Trash,
+      textColor:"text-red-400",
       confirm: true,
-      variant: "destructive",
       onClick: (id) => router.delete(`/users/${id}`),
     },
   ];

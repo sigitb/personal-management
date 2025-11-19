@@ -138,54 +138,59 @@ export function DataTable({
     ];
 
     return (
-        <Card>
-            <CardContent>
-                <div className="space-y-4 w-full">
-                    {/* Filters */}
-                    {/* <TableFilters
+        <>
+            <Card className='mb-2 py-3'>
+                {/* Filters */}
+                <CardContent className='px-3'>
+                    <TableFilters
                         configFilter={configFilter}
                         filters={localFilters}
                         onFiltersChange={setLocalFilters}
                         onApply={applyFilters}
                         onReset={resetFilters}
-                    /> */}
-
-                    {/* Table */}
-                    <div
-                        ref={tableContainerRef}
-                        className="rounded-xl border overflow-x-auto relative w-full"
-                        style={{ maxWidth: '100%' }}
-                    >
-                        <Table className="relative">
-                            <TableHeader>
-                                <TableHeaderRow
+                    />
+                </CardContent>
+            </Card>
+            <Card className='py-3'>
+                <CardContent className='px-3'>
+                    <div className="space-y-4 w-full">
+                        {/* Table */}
+                        <div
+                            ref={tableContainerRef}
+                            className="rounded-xl border overflow-x-auto relative w-full"
+                            style={{ maxWidth: '100%' }}
+                        >
+                            <Table className="relative">
+                                <TableHeader>
+                                    <TableHeaderRow
+                                        columns={sortedColumns}
+                                        sortConfig={sortConfig}
+                                        pinnedColumns={pinnedColumns}
+                                        columnWidths={columnWidths}
+                                        onSort={handleSort}
+                                        onTogglePin={togglePinColumn}
+                                        headerRefs={headerRefs}
+                                        getPinnedLeft={getPinnedLeft}
+                                    />
+                                </TableHeader>
+                                <TableBodyContent
                                     columns={sortedColumns}
-                                    sortConfig={sortConfig}
+                                    data={data}
                                     pinnedColumns={pinnedColumns}
-                                    columnWidths={columnWidths}
-                                    onSort={handleSort}
-                                    onTogglePin={togglePinColumn}
-                                    headerRefs={headerRefs}
                                     getPinnedLeft={getPinnedLeft}
                                 />
-                            </TableHeader>
-                            <TableBodyContent
-                                columns={sortedColumns}
-                                data={data}
-                                pinnedColumns={pinnedColumns}
-                                getPinnedLeft={getPinnedLeft}
-                            />
-                        </Table>
-                    </div>
+                            </Table>
+                        </div>
 
-                    {/* Pagination */}
-                    <TablePagination
-                        pagination={pagination}
-                        onPageChange={handlePageChange}
-                        onPerPageChange={handlePerPageChange}
-                    />
-                </div>
-            </CardContent>
-        </Card>
+                        {/* Pagination */}
+                        <TablePagination
+                            pagination={pagination}
+                            onPageChange={handlePageChange}
+                            onPerPageChange={handlePerPageChange}
+                        />
+                    </div>
+                </CardContent>
+            </Card>
+        </>
     );
 }

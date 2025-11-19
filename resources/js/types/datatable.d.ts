@@ -20,17 +20,20 @@ export interface DataTableProps {
     data: T[];
     pagination: PaginationData;
     filters?: Record<string, any>;
-    configFilter?:ConfigFilter[];
+    configFilter?: ConfigFilter[];
     sort?: { column: string; direction: 'asc' | 'desc' };
 }
 
 
 export type ActionButton = {
     label: string;
-    onClick: (id: number | string) => void;
+    onClick: (id: string | number, data?: Record<string, any>) => void
     icon?: LucideIcon;
     variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
     confirm?: boolean;
+    confirmWithForm?: boolean;
+    textColor?: string;
+    inputs?: ActionInputField[];
 };
 
 export interface ActionButtonsProps {
@@ -75,4 +78,12 @@ export interface TableFiltersProps {
     onFiltersChange: (filters: Record<string, any>) => void;
     onApply: () => void;
     onReset: () => void;
+}
+
+export interface ActionInputField {
+    name: string;                         // key
+    label: string;                        // label di form
+    type: "text" | "textarea" | "number" | "select" | "checkbox";
+    placeholder?: string;
+    options?: { label: string; value: string | number }[]; // untuk select
 }

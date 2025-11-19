@@ -9,7 +9,7 @@ export default function Topbar() {
             <div className="flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4 md:px-6 max-w-full">
                 {/* Logo + Toggle (mobile) */}
                 <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                    <SidebarTrigger className="h-8 w-8 sm:h-10 sm:w-10" />
+                    <SidebarTrigger className="h-8 w-8 sm:h-10 sm:w-10 text-card-foreground rounded-[7px]" />
                     {/* Optional: Add logo or title here */}
                 </div>
 
