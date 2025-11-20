@@ -174,7 +174,7 @@ export default function Index({ users, pagination, filters, sort, permission, ur
           filters={filters}
           sort={sort}
           title='User'
-          breadcrumb={breadcrumbs}
+        breadcrumbs={breadcrumbs}
           urlCreate='/user_create'
           // withImport={true}
           // withExport={[

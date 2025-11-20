@@ -28,7 +28,7 @@ export interface DataTableProps {
     withExport?: ExportItem[];
     sort?: { column: string; direction: 'asc' | 'desc' };
     urlCreate?:string;
-    breadcrumb:BreadcrumbDataItem[];
+    breadcrumbs:BreadcrumbDataItem[];
     title:string;
 }
 

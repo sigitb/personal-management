@@ -59,11 +59,11 @@ class TestController extends Controller
             'breadcrumbs' => [
                 [
                     "title" => 'test',
-                    "herf" => '/test'
+                    "href" => '/test'
                 ],
                 [
                     "title" => 'test 1',
-                    "herf" => '/test'
+                    "href" => '/test'
                 ]
             ]
         ]);

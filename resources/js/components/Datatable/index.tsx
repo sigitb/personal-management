@@ -27,7 +27,7 @@ export function DataTable({
     sort,
     withImport,
     withExport,
-    breadcrumb,
+    breadcrumbs,
     title,
     urlCreate
 }: DataTableProps) {
@@ -164,7 +164,7 @@ export function DataTable({
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="item-center">
                             <p className='text-2xl font-semibold mb-2'>{title}</p>
-                            <Breadcrumbs breadcrumbs={breadcrumb} />
+                            <Breadcrumbs breadcrumbs={breadcrumbs} />
                         </div>
                         {urlCreate && (
                             <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
@@ -176,9 +176,9 @@ export function DataTable({
                     </div>
                 </CardContent>
             </Card>
+            {/* table, import, export, filters */}
             <Card className='py-3'>
                 <CardContent className='px-3 py-1'>
-
                     <div className="space-y-4 w-full">
                         {/* filter & perpage & button import, export */}
                         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
