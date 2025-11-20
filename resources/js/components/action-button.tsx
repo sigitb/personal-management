@@ -21,11 +21,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { MoreHorizontal } from "lucide-react";
-import { ActionButton, ActionButtonsProps } from "@/types/datatable";
+import { ActionButton, ActionButtonsProps, ActionInputField } from "@/types/datatable";
 import { useConfirmation } from "@/hooks/use-confirmatio";
 import { useState } from "react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { cn } from "@/lib/utils";
+import { MultiSelectSearch, NormalSelect, SingleSelectSearch } from "./select-all";
+import { Option } from "@/types/select";
+import { DatePicker, DateRangePicker } from "./datepicker";
 
 export default function ActionButtons({ id, actions }: ActionButtonsProps) {
     const { confirmAction, requestConfirmation, clearConfirmation } = useConfirmation();
@@ -52,6 +55,93 @@ export default function ActionButtons({ id, actions }: ActionButtonsProps) {
             clearConfirmation();
         }
     };
+
+    const handleFormAction = ({ label,
+        placeholder,
+        key,
+        type,
+        options }: ActionInputField) => {
+        switch (type) {
+            case "select":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <NormalSelect
+                            options={options as Option[]}
+                            onChange={(value) => handleChange(key, value)}
+                            placeholder={placeholder}
+                        />
+                    </div>
+                );
+            case "multiple-select":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <MultiSelectSearch
+                            options={options as Option[]}
+                            onChange={(value) => handleChange(key, value)}
+                            placeholder={placeholder}
+                        />
+                    </div>
+                );
+            case "select-search":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <SingleSelectSearch
+                            options={options as Option[]}
+                            onChange={(value) => handleChange(key, value)}
+                            placeholder={placeholder}
+                        />
+                    </div>
+                );
+            case "date":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <DatePicker key={key} placeholder={`pilih tanggal....`} onChange={(value) => handleChange(key, value)} />
+                    </div>
+                )
+            case "date-range":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <DateRangePicker key={key} placeholder={`pilih tanggal....`} onChange={(value) => handleChange(key, value)} />
+                    </div>
+                )
+
+            case "number":
+            case "text":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <Input
+                            className='rounded-[7px]'
+                            size={10}
+                            id={key}
+                            type={type}
+                            placeholder={placeholder}
+                            onChange={(e) => handleChange(key, e.target.value)}
+                        />
+                    </div>
+                );
+
+            default:
+                return null;
+        }
+    }
 
     return (
         <div className="flex items-center gap-1">
@@ -126,83 +216,8 @@ export default function ActionButtons({ id, actions }: ActionButtonsProps) {
                             confirmAction.inputs.length > 0 && (
                                 <div className="mt-4 space-y-4">
                                     {confirmAction.inputs.map((input) => (
-                                        <div key={input.name}>
-                                            <label className="text-sm font-medium">
-                                                {input.label}
-                                            </label>
-
-                                            {/* TEXT */}
-                                            {input.type === "text" && (
-                                                <Input
-                                                    placeholder={input.placeholder}
-                                                    value={formData[input.name] || ""}
-                                                    onChange={(e) =>
-                                                        handleChange(input.name, e.target.value)
-                                                    }
-                                                    className="mt-1"
-                                                />
-                                            )}
-
-                                            {/* NUMBER */}
-                                            {input.type === "number" && (
-                                                <Input
-                                                    type="number"
-                                                    placeholder={input.placeholder}
-                                                    value={formData[input.name] || ""}
-                                                    onChange={(e) =>
-                                                        handleChange(input.name, Number(e.target.value))
-                                                    }
-                                                    className="mt-1"
-                                                />
-                                            )}
-
-                                            {/* TEXTAREA */}
-                                            {input.type === "textarea" && (
-                                                <Textarea
-                                                    placeholder={input.placeholder}
-                                                    value={formData[input.name] || ""}
-                                                    onChange={(e) =>
-                                                        handleChange(input.name, e.target.value)
-                                                    }
-                                                    className="mt-1"
-                                                />
-                                            )}
-
-                                            {/* SELECT */}
-                                            {input.type === "select" && (
-                                                <select
-                                                    className="border rounded-md p-2 w-full mt-1"
-                                                    value={formData[input.name] || ""}
-                                                    onChange={(e) =>
-                                                        handleChange(input.name, e.target.value)
-                                                    }
-                                                >
-                                                    <option value="">Pilih...</option>
-                                                    {input.options?.map((opt) => (
-                                                        <option key={opt.value} value={opt.value}>
-                                                            {opt.label}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            )}
-
-                                            {/* CHECKBOX */}
-                                            {input.type === "checkbox" && (
-                                                <div className="flex items-center mt-1">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={formData[input.name] || false}
-                                                        onChange={(e) =>
-                                                            handleChange(
-                                                                input.name,
-                                                                e.target.checked
-                                                            )
-                                                        }
-                                                        className="mr-2"
-                                                    />
-                                                    <span>{input.placeholder}</span>
-                                                </div>
-                                            )}
+                                        <div key={input.key} className="mb-2">
+                                            {handleFormAction(input)}
                                         </div>
                                     ))}
                                 </div>

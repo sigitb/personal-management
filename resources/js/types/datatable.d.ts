@@ -1,3 +1,5 @@
+import { Option } from "./select";
+
 export interface Column {
     key: string;
     label: string;
@@ -71,7 +73,7 @@ export interface ConfigFilter {
     label: string;
     placeholder?: string;
     filterType?: "text" | "number" | "select" | "multiple-select" | "select-search" | "date" | "date-range";
-    filterOptions?: { value: string; label: string }[];
+    filterOptions?: Option[];
 }
 
 export interface TableFiltersProps {
@@ -83,14 +85,15 @@ export interface TableFiltersProps {
 }
 
 export interface ActionInputField {
-    name: string;                         // key
+    key: string;                         // key
     label: string;                        // label di form
     type: "text" | "textarea" | "number" | "select" | "checkbox" | "multiple-select" | "select-search" | "date" | 'date-range';
     placeholder?: string;
-    options?: { label: string; value: string | number }[]; // untuk select
+    options?: Option[] // untuk select
 }
 
 export interface ExportItem {
     title: string;
     href: string;
 }
+
