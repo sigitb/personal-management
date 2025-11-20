@@ -149,7 +149,7 @@ export default function ActionButtons({ id, actions }: ActionButtonsProps) {
                 actions.map((action) => {
                     const Icon = action.icon;
                     return (
-                        <Tooltip>
+                        <Tooltip key={action.label}>
                             <TooltipTrigger asChild>
                                 <Button
                                     key={action.label}
