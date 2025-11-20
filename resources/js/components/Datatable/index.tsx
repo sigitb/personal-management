@@ -6,13 +6,14 @@ import { TableHeaderRow } from './table-header';
 import { TableBodyContent } from './table-body';
 import { TablePagination } from './table-pagination';
 import { TableFilters } from './table-filter';
-import { Card, CardContent, CardHeader } from '../ui/card';
+import { Card, CardContent } from '../ui/card';
 import { RowPerPage } from './tabel-row-page';
-import { Filter, Search } from 'lucide-react';
-import { Input } from '../ui/input';
+import { Filter} from 'lucide-react';
 import { Button } from '../ui/button';
 import { DefaultSearch } from './tabel-defaulf-seach';
 import { cn } from '@/lib/utils';
+import { FILE_CONFIGS, SingleFileImport } from '../import-file';
+import { ValidatedFile } from '@/types/import-file';
 
 
 export function DataTable({
@@ -22,6 +23,7 @@ export function DataTable({
     pagination,
     filters = {},
     sort,
+    withImport
 }: DataTableProps) {
     const [localFilters, setLocalFilters] = useState<Record<string, any>>(filters);
     const [pinnedColumns, setPinnedColumns] = useState<string[]>([]);
@@ -145,6 +147,10 @@ export function DataTable({
         ...columns.filter((col) => !pinnedColumns.includes(col.key)),
     ];
 
+    const handleImport = (config: ValidatedFile) => {
+            console.log('Single file imported:', config.name)
+    }
+
     return (
         <>
             <Card className='py-3'>
@@ -177,6 +183,10 @@ export function DataTable({
                                             </Button>
                                         )
                                     }
+                                    {withImport && (
+                                        <SingleFileImport config={FILE_CONFIGS.EXCEL_ONLY}
+                                        onImport={handleImport} />
+                                    )}
                                 </div>
                             </div>
                             <div className="flex lg:justify-end md:justify-end">

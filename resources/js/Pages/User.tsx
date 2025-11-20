@@ -1,12 +1,15 @@
 
 // import { BreadcrumbItem } from '@/types';
 import { Card, CardContent } from '@/components/ui/card';
-import { Eye, Pencil, Trash } from 'lucide-react';
+import { Car, Eye, Pencil, Plus, Trash } from 'lucide-react';
 import ActionButtons from '@/components/action-button';
 import AppLayout from '@/Layouts/AppLayout';
 import { DataTable } from '@/components/Datatable';
 import { ActionButton, Column, ConfigFilter, PaginationData } from '@/types/datatable';
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
+import { Button } from '@/components/ui/button';
+import { Breadcrumbs } from '@/components/breadcrumbs';
+import { BreadcrumbDataItem } from '@/types/breadcrumb';
 
 interface User {
   id: number;
@@ -20,11 +23,14 @@ interface Props {
   users: User[];
   pagination: PaginationData;
   filters: Record<string, any>;
+  permission: [],
+  breadcrumbs: BreadcrumbDataItem[],
+  url_create: string,
   sort: { column: string; direction: 'asc' | 'desc' };
 }
 
 
-export default function Index({ users, pagination, filters, sort }: Props) {
+export default function Index({ users, pagination, filters, sort, permission, url_create, breadcrumbs }: Props) {
   const actions: ActionButton[] = [
     {
       label: "Edit",
@@ -99,75 +105,91 @@ export default function Index({ users, pagination, filters, sort }: Props) {
   ];
 
   const configFilters: ConfigFilter[] = [
-    {
-      key: "email",
-      label: "Email",
-      placeholder: "Email.....",
-      filterType: "text"
-    },
-    {
-      key: "name",
-      label: "Name",
-      placeholder: "Name.....",
-      filterType: "text"
-    },
-    {
-      key: "date",
-      label: "Tanggal",
-      placeholder: "date.....",
-      filterType: "date"
-    },
-    {
-      key: "date-range",
-      label: "Tanggal range",
-      placeholder: "date.....",
-      filterType: "date-range"
-    },
-    {
-      key: "status",
-      label: "Status",
-      placeholder: "Pilih Status.....",
-      filterType: "multiple-select",
-      filterOptions: [
-        { label: "test", value: "test" },
-        { label: "test1", value: "test1" },
-        { label: "test2", value: "test2" }
-      ]
-    },
-    {
-      key: "status-te",
-      label: "Status te",
-      placeholder: "Pilih Status.....",
-      filterType: "select",
-      filterOptions: [
-        { label: "test", value: "test" },
-        { label: "test1", value: "test1" },
-        { label: "test2", value: "test2" }
-      ]
-    },
-    {
-      key: "status-re",
-      label: "Status re",
-      placeholder: "Pilih Status.....",
-      filterType: "select-search",
-      filterOptions: [
-        { label: "test", value: "test" },
-        { label: "test1", value: "test1" },
-        { label: "test2", value: "test2" }
-      ]
-    },
+    // {
+    //   key: "email",
+    //   label: "Email",
+    //   placeholder: "Email.....",
+    //   filterType: "text"
+    // },
+    // {
+    //   key: "name",
+    //   label: "Name",
+    //   placeholder: "Name.....",
+    //   filterType: "text"
+    // },
+    // {
+    //   key: "date",
+    //   label: "Tanggal",
+    //   placeholder: "date.....",
+    //   filterType: "date"
+    // },
+    // {
+    //   key: "date-range",
+    //   label: "Tanggal range",
+    //   placeholder: "date.....",
+    //   filterType: "date-range"
+    // },
+    // {
+    //   key: "status",
+    //   label: "Status",
+    //   placeholder: "Pilih Status.....",
+    //   filterType: "multiple-select",
+    //   filterOptions: [
+    //     { label: "test", value: "test" },
+    //     { label: "test1", value: "test1" },
+    //     { label: "test2", value: "test2" }
+    //   ]
+    // },
+    // {
+    //   key: "status-te",
+    //   label: "Status te",
+    //   placeholder: "Pilih Status.....",
+    //   filterType: "select",
+    //   filterOptions: [
+    //     { label: "test", value: "test" },
+    //     { label: "test1", value: "test1" },
+    //     { label: "test2", value: "test2" }
+    //   ]
+    // },
+    // {
+    //   key: "status-re",
+    //   label: "Status re",
+    //   placeholder: "Pilih Status.....",
+    //   filterType: "select-search",
+    //   filterOptions: [
+    //     { label: "test", value: "test" },
+    //     { label: "test1", value: "test1" },
+    //     { label: "test2", value: "test2" }
+    //   ]
+    // },
   ]
 
   return (
     <AppLayout>
       <>
+        <Card className='mb-2 py-2'>
+          <CardContent className='px-3 py-1'>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="">
+                <p className='text-2xl font-semibold mb-2'>User</p>
+                <Breadcrumbs breadcrumbs={breadcrumbs} />
+              </div>
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                <Button variant={'default'} className='rounded-[7px]' size={"sm"}>
+                  <Link href={url_create} className='flex gap-2'> <Plus className='h-4 w-4' /> Tambah Data </Link>
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
         <DataTable
           columns={columns}
           data={users}
           pagination={pagination}
           filters={filters}
           sort={sort}
-          configFilter={configFilters}
+          withImport={true}
+          // configFilter={configFilters}
         />
       </>
     </AppLayout>

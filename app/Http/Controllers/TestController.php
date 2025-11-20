@@ -52,6 +52,20 @@ class TestController extends Controller
                 'column' => $request->get('sort_by', ''),
                 'direction' => $request->get('sort_direction', 'asc'),
             ],
+            'permission' => [
+
+            ],
+            'url_create' => '',
+            'breadcrumbs' => [
+                [
+                    "title" => 'test',
+                    "herf" => '/test'
+                ],
+                [
+                    "title" => 'test 1',
+                    "herf" => '/test'
+                ]
+            ]
         ]);
     }
 }
