@@ -1,3 +1,4 @@
+import { BreadcrumbDataItem } from "./breadcrumb";
 import { Option } from "./select";
 
 export interface Column {
@@ -26,6 +27,9 @@ export interface DataTableProps {
     withImport?: boolean;
     withExport?: ExportItem[];
     sort?: { column: string; direction: 'asc' | 'desc' };
+    urlCreate?:string;
+    breadcrumb:BreadcrumbDataItem[];
+    title:string;
 }
 
 

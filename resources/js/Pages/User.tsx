@@ -166,35 +166,22 @@ export default function Index({ users, pagination, filters, sort, permission, ur
 
   return (
     <AppLayout>
-      <>
-        <Card className='mb-2 py-2'>
-          <CardContent className='px-3 py-1'>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="">
-                <p className='text-2xl font-semibold mb-2'>User</p>
-                <Breadcrumbs breadcrumbs={breadcrumbs} />
-              </div>
-              <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                <Button variant={'default'} className='rounded-[7px]' size={"sm"}>
-                  <Link href={url_create} className='flex gap-2'> <Plus className='h-4 w-4' /> Tambah Data </Link>
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      
         <DataTable
           columns={columns}
           data={users}
           pagination={pagination}
           filters={filters}
           sort={sort}
+          title='User'
+          breadcrumb={breadcrumbs}
+          urlCreate='/user_create'
           // withImport={true}
           // withExport={[
           //   {title:"test", href:"test"}
           // ]}
           // configFilter={configFilters}
         />
-      </>
     </AppLayout>
   );
 }

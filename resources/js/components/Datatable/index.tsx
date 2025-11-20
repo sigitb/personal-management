@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { Column, DataTableProps } from '@/types/datatable';
 import { Table, TableHeader } from '../ui/table';
 import { TableHeaderRow } from './table-header';
@@ -8,13 +8,14 @@ import { TablePagination } from './table-pagination';
 import { TableFilters } from './table-filter';
 import { Card, CardContent } from '../ui/card';
 import { RowPerPage } from './tabel-row-page';
-import { Filter} from 'lucide-react';
+import { Filter, Plus } from 'lucide-react';
 import { Button } from '../ui/button';
 import { DefaultSearch } from './tabel-defaulf-seach';
 import { cn } from '@/lib/utils';
 import { FILE_CONFIGS, SingleFileImport } from '../import-file';
 import { ValidatedFile } from '@/types/import-file';
 import { ExportData } from '../export';
+import { Breadcrumbs } from '../breadcrumbs';
 
 
 export function DataTable({
@@ -25,7 +26,10 @@ export function DataTable({
     filters = {},
     sort,
     withImport,
-    withExport
+    withExport,
+    breadcrumb,
+    title,
+    urlCreate
 }: DataTableProps) {
     const [localFilters, setLocalFilters] = useState<Record<string, any>>(filters);
     const [pinnedColumns, setPinnedColumns] = useState<string[]>([]);
@@ -150,11 +154,28 @@ export function DataTable({
     ];
 
     const handleImport = (config: ValidatedFile) => {
-            console.log('Single file imported:', config.name)
+        console.log('Single file imported:', config.name)
     }
 
     return (
         <>
+            <Card className='mb-2 py-2'>
+                <CardContent className='px-3 py-1'>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div className="item-center">
+                            <p className='text-2xl font-semibold mb-2'>{title}</p>
+                            <Breadcrumbs breadcrumbs={breadcrumb} />
+                        </div>
+                        {urlCreate && (
+                            <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                                <Button variant={'default'} className='rounded-[7px]' size={"sm"}>
+                                    <Link href={urlCreate} className='flex gap-2'> <Plus className='h-4 w-4' /> Tambah Data </Link>
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                </CardContent>
+            </Card>
             <Card className='py-3'>
                 <CardContent className='px-3 py-1'>
 
@@ -187,7 +208,7 @@ export function DataTable({
                                     }
                                     {withImport && (
                                         <SingleFileImport config={FILE_CONFIGS.EXCEL_ONLY}
-                                        onImport={handleImport} />
+                                            onImport={handleImport} />
                                     )}
 
                                     {(withExport?.length || 0) > 0 && (
