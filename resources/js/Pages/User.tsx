@@ -1,7 +1,7 @@
 
 // import { BreadcrumbItem } from '@/types';
 import { Card, CardContent } from '@/components/ui/card';
-import { Car, Eye, Pencil, Plus, Trash } from 'lucide-react';
+import { Car, Eye, Pencil, Plus, SquarePen, Trash, Trash2 } from 'lucide-react';
 import ActionButtons from '@/components/action-button';
 import AppLayout from '@/Layouts/AppLayout';
 import { DataTable } from '@/components/Datatable';
@@ -34,7 +34,7 @@ export default function Index({ users, pagination, filters, sort, permission, ur
   const actions: ActionButton[] = [
     {
       label: "Edit",
-      icon: Pencil,
+      icon: SquarePen,
       textColor: "text-green-400",
       onClick: (id) => router.get(`/users/${id}/edit`),
     },
@@ -46,7 +46,7 @@ export default function Index({ users, pagination, filters, sort, permission, ur
     },
     {
       label: "Hapus",
-      icon: Trash,
+      icon: Trash2,
       textColor: "text-red-400",
       confirm: true,
       onClick: (id) => router.delete(`/users/${id}`),
@@ -188,7 +188,10 @@ export default function Index({ users, pagination, filters, sort, permission, ur
           pagination={pagination}
           filters={filters}
           sort={sort}
-          withImport={true}
+          // withImport={true}
+          // withExport={[
+          //   {title:"test", href:"test"}
+          // ]}
           // configFilter={configFilters}
         />
       </>

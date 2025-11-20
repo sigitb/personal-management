@@ -22,6 +22,7 @@ export interface DataTableProps {
     filters?: Record<string, any>;
     configFilter?: ConfigFilter[];
     withImport?: boolean;
+    withExport?: ExportItem[];
     sort?: { column: string; direction: 'asc' | 'desc' };
 }
 
@@ -87,4 +88,9 @@ export interface ActionInputField {
     type: "text" | "textarea" | "number" | "select" | "checkbox" | "multiple-select" | "select-search" | "date" | 'date-range';
     placeholder?: string;
     options?: { label: string; value: string | number }[]; // untuk select
+}
+
+export interface ExportItem {
+    title: string;
+    href: string;
 }

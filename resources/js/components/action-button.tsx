@@ -54,8 +54,8 @@ export default function ActionButtons({ id, actions }: ActionButtonsProps) {
     };
 
     return (
-        <div className="flex items-center gap-2">
-            {actions.length <= 2 ? (
+        <div className="flex items-center gap-1">
+            {actions.length <= 4 ? (
                 actions.map((action) => {
                     const Icon = action.icon;
                     return (
@@ -94,10 +94,10 @@ export default function ActionButtons({ id, actions }: ActionButtonsProps) {
                             return (
                                 <DropdownMenuItem
                                     key={action.label}
-                                    className={cn(action.textColor, "rounded-[7px] opacity-80 hover:opacity-95", `focus:${action.textColor}`)}
+                                    className="rounded-[7px]"
                                     onClick={() => handleActionClick(action)}
                                 >
-                                    {Icon && <Icon size={16} className={cn(action.textColor, "rounded-[7px] opacity-80 hover:opacity-95", `focus:${action.textColor}`)} />}
+                                    {Icon && <Icon size={16} className="rounded-[7px]" />}
                                     {action.label}
                                 </DropdownMenuItem>
                             );

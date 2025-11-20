@@ -554,8 +554,8 @@ function SingleFileImport({ config = DEFAULT_CONFIG, onImport, onUploadSuccess, 
                     )}
 
                     {file && (
-                        <Card className="border-green-300 bg-green-50">
-                            <CardContent className="p-4">
+                        <Card className="border-green-300 ">
+                            <CardContent className="">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center space-x-3 flex-1 min-w-0">
                                         <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0" />
@@ -582,7 +582,7 @@ function SingleFileImport({ config = DEFAULT_CONFIG, onImport, onUploadSuccess, 
                                         variant="ghost"
                                         size="sm"
                                         onClick={removeFile}
-                                        className="ml-2 flex-shrink-0"
+                                        className="ml-2 flex-shrink-0 rounded-[7px]"
                                     >
                                         <X className="w-5 h-5" />
                                     </Button>

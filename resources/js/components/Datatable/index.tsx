@@ -14,6 +14,7 @@ import { DefaultSearch } from './tabel-defaulf-seach';
 import { cn } from '@/lib/utils';
 import { FILE_CONFIGS, SingleFileImport } from '../import-file';
 import { ValidatedFile } from '@/types/import-file';
+import { ExportData } from '../export';
 
 
 export function DataTable({
@@ -23,7 +24,8 @@ export function DataTable({
     pagination,
     filters = {},
     sort,
-    withImport
+    withImport,
+    withExport
 }: DataTableProps) {
     const [localFilters, setLocalFilters] = useState<Record<string, any>>(filters);
     const [pinnedColumns, setPinnedColumns] = useState<string[]>([]);
@@ -187,6 +189,11 @@ export function DataTable({
                                         <SingleFileImport config={FILE_CONFIGS.EXCEL_ONLY}
                                         onImport={handleImport} />
                                     )}
+
+                                    {(withExport?.length || 0) > 0 && (
+                                        <ExportData title='Export' items={withExport || []} />
+                                    )}
+
                                 </div>
                             </div>
                             <div className="flex lg:justify-end md:justify-end">
