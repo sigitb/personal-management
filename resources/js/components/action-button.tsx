@@ -224,8 +224,8 @@ export default function ActionButtons({ id, actions }: ActionButtonsProps) {
                             )}
 
                         <AlertDialogFooter>
-                            <AlertDialogCancel>Batal</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleConfirm}>
+                            <AlertDialogCancel className="rounded-[7px] border-primary text-primary hover:bg-primary">Batal</AlertDialogCancel>
+                            <AlertDialogAction onClick={handleConfirm} className="rounded-[7px]">
                                 Lanjutkan
                             </AlertDialogAction>
                         </AlertDialogFooter>
