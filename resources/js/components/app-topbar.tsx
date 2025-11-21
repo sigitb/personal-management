@@ -1,9 +1,12 @@
 import { SidebarTrigger } from "./ui/sidebar";
 import { Bell, LogOut, UserRoundPen } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { Separator } from "./ui/separator";
+
+import { Link, router, usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
 
 export default function Topbar() {
+    const {auth} = usePage<PageProps>().props
     return (
         <header className="sticky top-0 left-0 right-0 z-50 bg-sidebar border-b shadow-sm w-full">
             <div className="flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4 md:px-6 max-w-full">
@@ -29,7 +32,7 @@ export default function Topbar() {
                         <DropdownMenuTrigger asChild>
                             <button className="flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-primary rounded-full">
                                 <img
-                                    src="https://ui-avatars.com/api/?name=John+Doe"
+                                    src={`https://ui-avatars.com/api/?name=${auth.user?.name}`}
                                     alt="User Avatar"
                                     className="h-4 w-4 sm:h-5 sm:w-5 md:h-8 md:w-8 rounded-full ring-2 ring-gray-200 hover:ring-primary transition-all cursor-pointer"
                                 />
@@ -39,13 +42,13 @@ export default function Topbar() {
                             {/* User Info Header */}
                             <div className="flex gap-3 p-3 hover:bg-accent/50 rounded-t-lg transition-colors">
                                 <img
-                                    src="https://ui-avatars.com/api/?name=John+Doe"
+                                    src={`https://ui-avatars.com/api/?name=${auth.user?.name}`}
                                     alt="User Avatar" 
                                     className="h-10 w-10 rounded-xl ring-2 ring-gray-200 flex-shrink-0" 
                                 />
                                 <div className="grid flex-1 text-left text-sm leading-tight overflow-hidden">
-                                    <span className="truncate font-semibold text-foreground">John Doe</span>
-                                    <span className="truncate text-xs text-muted-foreground">john.doe@email.com</span>
+                                    <span className="truncate font-semibold text-foreground">{auth.user?.name}</span>
+                                    <span className="truncate text-xs text-muted-foreground">{auth.user?.email}</span>
                                 </div>
                             </div>
                             
@@ -59,9 +62,9 @@ export default function Topbar() {
                             
                             <DropdownMenuSeparator />
 
-                            <DropdownMenuItem className="cursor-pointer gap-3 py-2.5 text-red-600 focus:text-red-600 focus:bg-red-50">
-                                <LogOut className="h-4 w-4" />
-                                <span>Logout</span>
+                            <DropdownMenuItem className="cursor-pointer gap-3 py-2.5" onClick={() => router.get('/auth/logout')}>
+                                    <LogOut className="h-4 w-4" />
+                                    <span>Logout</span>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

@@ -1,22 +1,28 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
 
 
 Route::get('/', function () {
-    return redirect('auth/login')->with('success', 'test');
-});
-Route::prefix('auth')->name('auth')->group(function(){
-    Route::get('/login', function(){
-        return Inertia::render('Auth/Login');
-    });
-    Route::get('/register', function(){
-        return Inertia::render('Auth/Register');
-    });
+    return redirect()->route('auth.login');
 });
 
-Route::get('/dashboard',[TestController::class,'index']);
+Route::get('/login', function () {
+    return redirect()->route('auth.login');
+})->name('login');
+
+Route::prefix('auth')->name('auth.')->controller(AuthController::class)->group(function(){
+    Route::get('/login', 'login')->name('login');
+    Route::post('login', 'processLogin')->name('process.login');
+    Route::get('/register', 'register')->name('register');
+    Route::post('register', 'processRegister')->name('process.register');
+    Route::get('logout', 'logout')->middleware('auth')->name('logout');
+});
+
+Route::middleware(['auth'])->prefix('admin-panel')->name('admin_panel.')->group(function(){
+    Route::get('/dashboard',[TestController::class,'index'])->name('dashboard');
+});
+
 

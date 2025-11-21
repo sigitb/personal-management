@@ -5,21 +5,24 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface LoginForm {
     email: string;
     password: string;
+    remember: boolean;
 }
 
 const Login: React.FC = () => {
     const { data, setData, post, processing, errors } = useForm<LoginForm>({
         email: '',
-        password: ''
+        password: '',
+        remember: false
     });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post('/login');
+        post('/auth/login');
     };
 
     return (
@@ -69,7 +72,10 @@ const Login: React.FC = () => {
                                 disabled={processing}
                                 className='rounded-[7px]'
                             />
-                            
+                            <div className="flex items-center gap-3">
+                                <Checkbox id="rembember" onCheckedChange={(checked) => setData('remember', checked === true)} />
+                                <Label htmlFor="rembember">Remember me</Label>
+                            </div>
                         </div>
 
                         <Button

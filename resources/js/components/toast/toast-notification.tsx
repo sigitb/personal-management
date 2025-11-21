@@ -70,7 +70,7 @@ export const ToastNotification: React.FC<ToastNotificationProps> = ({
 
     return (
         <div
-            className={`fixed ${positionMap[position]} z-50 transition-all duration-300 ease-in-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
+            className={`fixed ${positionMap[position]} z-100 transition-all duration-300 ease-in-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'
                 }`}
         >
             <Alert

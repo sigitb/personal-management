@@ -23,7 +23,7 @@ const Register: React.FC = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    post('/register');
+    post('/auth/register');
   };
 
   return (
