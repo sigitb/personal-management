@@ -15,7 +15,7 @@ const MainNavMenu:NavGroup[] = [
     items:[
       {
         title:"Dashboard",
-        href:"/dashboard",
+        href:"/admin-panel/dashboard",
         icon:Home
       }
     ]
