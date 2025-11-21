@@ -74,7 +74,7 @@ export const ToastNotification: React.FC<ToastNotificationProps> = ({
                 }`}
         >
             <Alert
-                className={`${colorMap[type]} border-l-4 shadow-lg min-w-[350px] max-w-md rounded-2xl p-4 flex items-start gap-4`}
+                className={`${colorMap[type]} border-l-4 shadow-lg min-w-[350px] max-w-md rounded-2xl p-2 flex items-start gap-4`}
             >
                 <div className="text-xl mt-1 flex-shrink-0">{iconMap[type]}</div>
 
@@ -88,7 +88,7 @@ export const ToastNotification: React.FC<ToastNotificationProps> = ({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="h-7 w-7 rounded-full hover:bg-black/10 dark:hover:bg-white/10 flex-shrink-0"
+                    className="h-7 w-7 rounded-full hover:bg-white/10 hover:text-black flex-shrink-0"
                     onClick={handleClose}
                 >
                     <X className="h-4 w-4" />
