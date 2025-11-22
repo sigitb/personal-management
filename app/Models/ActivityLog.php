@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class ActivityLog extends Model
 {
     use HasUuids;
-
+    public $timestamps = false;
     protected $guarded = [];
+
+    protected $casts = [
+        'before_data' => 'array',
+        'after_data' => 'array',
+    ];
+
 }

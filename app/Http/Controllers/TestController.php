@@ -9,7 +9,6 @@ class TestController extends Controller
 {
     public function index(Request $request)
     {
-        info($request->all());
         $users = [
             [
                 'id' => 1,
