@@ -68,8 +68,8 @@ export default function FinanceType({ data, pagination, filters, breadcrumbs, so
 
         const url =
             modalMode === "create"
-                ? "/admin-panel/finance/type"
-                : `/admin-panel/finance/type/${formData.id}`;
+                ? "/admin-panel/finance/category"
+                : `/admin-panel/finance/category/${formData.id}`;
 
         const method = modalMode === "create" ? "post" : "put";
 
@@ -98,7 +98,7 @@ export default function FinanceType({ data, pagination, filters, breadcrumbs, so
             icon: Trash2,
             textColor: "text-red-400",
             confirm: true,
-            onClick: (id) => router.delete(`/admin-panel/finance/type/${id}`),
+            onClick: (id) => router.delete(`/admin-panel/finance/category/${id}`),
         },
     ];
 
@@ -124,15 +124,15 @@ export default function FinanceType({ data, pagination, filters, breadcrumbs, so
     ];
 
     const buttonCreateitem: ActionCreateItem[] = [{
-        label: 'Add Finance Type',
-        href: '/admin-panel/finance/type/create',
+        label: 'Add Finance Category',
+        href: '/admin-panel/finance/category/create',
         type: 'modal',
         onClick: handleOpenCreate
     }]
 
     return (
         <AppLayout>
-            <PageHeader title='Finance Type' description='List Finance Type' breadcrumbs={breadcrumbs} />
+            <PageHeader title='Finance Category' description='List Finance Category' breadcrumbs={breadcrumbs} />
             <ActionCreate items={buttonCreateitem} />
             <DataTable
                 columns={columns}
@@ -146,7 +146,7 @@ export default function FinanceType({ data, pagination, filters, breadcrumbs, so
                 isOpen={isModalOpen}
                 onClose={handleClose}
                 onSubmit={handleSubmit}
-                title={modalMode === 'create' ? 'Add Finance Type' : 'Edit Finance Type'}
+                title={modalMode === 'create' ? 'Add Finance Category' : 'Edit Finance Category'}
                 isLoading={isLoading}
                 description={
                     modalMode === 'create'

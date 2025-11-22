@@ -34,7 +34,7 @@ const MainNavMenu:NavGroup[] = [
           },
           {
             title:"Finance Category",
-            href:"#"
+            href:"/admin-panel/finance/category"
           }
         ]
       },
