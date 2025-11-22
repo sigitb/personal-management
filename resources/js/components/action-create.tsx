@@ -20,13 +20,13 @@ export function ActionCreate({ items }: ActionCrateProps) {
             case 'modal':
                 return (
                     <Button variant={'default'} className='rounded-[7px]' onClick={item.onClick} size={"sm"}>
-                        <Plus className='h-4 w-4' /> Tambah Data
+                        {item.icon ? <item.icon className="h-4 w-4" /> : <Plus className='h-4 w-4' />} {item.label}
                     </Button>
                 )
             default:
                 return (
                     <Button variant={'default'} className='rounded-[7px]' size={"sm"}>
-                        <Link href={item.href} className='flex gap-2'> <Plus className='h-4 w-4' /> Tambah Data </Link>
+                        <Link href={item.href} className='flex gap-2'> {item.icon ? <item.icon className="h-4 w-4" /> : <Plus className='h-4 w-4' />} {item.label} </Link>
                     </Button>
                 )
                 break;

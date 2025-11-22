@@ -10,4 +10,9 @@ class FinanceCategory extends Model
     use HasUuids;
 
     protected $guarded = [];
+
+    function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

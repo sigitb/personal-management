@@ -167,13 +167,8 @@ export default function Index({ users, pagination, filters, sort, permission, ur
     // },
   ]
 
-  const createButtom: ButtonCreateProps = {
-    href: '/users/create',
-    type: 'redirect',
-    onClick: () => router.get('/users/create')
-  }
-
   const buttonCreateitem: ActionCreateItem[] = [{
+    label: 'Create User',
     href: '/users/create',
     type: 'modal',
     onClick: () => console.log('create button')

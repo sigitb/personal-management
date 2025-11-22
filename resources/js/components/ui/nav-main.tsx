@@ -39,7 +39,7 @@ export function NavMain({ items = [] }: { items: NavGroup[] }) {
                                                 <CollapsibleTrigger asChild>
                                                     <SidebarMenuButton
                                                         tooltip={menu.title}
-                                                        isActive={isActive || isSubActive}
+                                                        // isActive={isActive || isSubActive}
                                                         className={cn(
                                                             "rounded-[7px] hover:text-primary",
                                                             (isActive || isSubActive) && "!text-primary"

@@ -37,7 +37,21 @@ export interface ActionCrateProps{
   items: ActionCreateItem[]
 }
 export interface ActionCreateItem{
+  label: string;
+  icon?: LucideIcon;
   href?: string;
   type: 'redirect' | 'modal' | 'import';
   onClick?: () => void;
+}
+
+export interface DataModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: () => void;
+  title: string;
+  description?: string;
+  children: React.ReactNode;
+  submitLabel?: string;
+  cancelLabel?: string;
+  isLoading?: boolean;
 }

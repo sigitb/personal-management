@@ -30,7 +30,7 @@ const MainNavMenu:NavGroup[] = [
         subMenu:[
           {
             title:"Finance Type",
-            href:"#"
+            href:"/admin-panel/finance/type"
           },
           {
             title:"Finance Category",
