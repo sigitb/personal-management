@@ -25,11 +25,7 @@ export function DataTable({
     pagination,
     filters = {},
     sort,
-    withImport,
     withExport,
-    breadcrumbs,
-    title,
-    urlCreate
 }: DataTableProps) {
     const [localFilters, setLocalFilters] = useState<Record<string, any>>(filters);
     const [pinnedColumns, setPinnedColumns] = useState<string[]>([]);
@@ -153,29 +149,8 @@ export function DataTable({
         ...columns.filter((col) => !pinnedColumns.includes(col.key)),
     ];
 
-    const handleImport = (config: ValidatedFile) => {
-        console.log('Single file imported:', config.name)
-    }
-
     return (
         <>
-            <Card className='mb-2 py-2'>
-                <CardContent className='px-3 py-1'>
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                        <div className="item-center">
-                            <p className='text-2xl font-semibold mb-2'>{title}</p>
-                            <Breadcrumbs breadcrumbs={breadcrumbs} />
-                        </div>
-                        {urlCreate && (
-                            <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-                                <Button variant={'default'} className='rounded-[7px]' size={"sm"}>
-                                    <Link href={urlCreate} className='flex gap-2'> <Plus className='h-4 w-4' /> Tambah Data </Link>
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                </CardContent>
-            </Card>
             {/* table, import, export, filters */}
             <Card className='py-3'>
                 <CardContent className='px-3 py-1'>
@@ -206,10 +181,6 @@ export function DataTable({
                                             </Button>
                                         )
                                     }
-                                    {withImport && (
-                                        <SingleFileImport config={FILE_CONFIGS.EXCEL_ONLY}
-                                            onImport={handleImport} />
-                                    )}
 
                                     {(withExport?.length || 0) > 0 && (
                                         <ExportData title='Export' items={withExport || []} />

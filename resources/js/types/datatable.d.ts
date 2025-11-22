@@ -24,12 +24,8 @@ export interface DataTableProps {
     pagination: PaginationData;
     filters?: Record<string, any>;
     configFilter?: ConfigFilter[];
-    withImport?: boolean;
     withExport?: ExportItem[];
     sort?: { column: string; direction: 'asc' | 'desc' };
-    urlCreate?:string;
-    breadcrumbs:BreadcrumbDataItem[];
-    title:string;
 }
 
 

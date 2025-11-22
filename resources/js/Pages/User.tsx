@@ -10,6 +10,9 @@ import { Link, router } from "@inertiajs/react";
 import { Button } from '@/components/ui/button';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { BreadcrumbDataItem } from '@/types/breadcrumb';
+import { ActionCreateItem, ButtonCreateProps } from '@/types';
+import { PageHeader } from '@/components/page-header';
+import { ActionCreate } from '@/components/action-create';
 
 interface User {
   id: number;
@@ -164,24 +167,35 @@ export default function Index({ users, pagination, filters, sort, permission, ur
     // },
   ]
 
+  const createButtom: ButtonCreateProps = {
+    href: '/users/create',
+    type: 'redirect',
+    onClick: () => router.get('/users/create')
+  }
+
+  const buttonCreateitem: ActionCreateItem[] = [{
+    href: '/users/create',
+    type: 'modal',
+    onClick: () => console.log('create button')
+    
+  }]
+
   return (
     <AppLayout>
-      
-        <DataTable
-          columns={columns}
-          data={users}
-          pagination={pagination}
-          filters={filters}
-          sort={sort}
-          title='User'
-        breadcrumbs={breadcrumbs}
-          urlCreate='/user_create'
-          // withImport={true}
-          // withExport={[
-          //   {title:"test", href:"test"}
-          // ]}
-          // configFilter={configFilters}
-        />
+      <PageHeader title='User' description='List Data User' breadcrumbs={breadcrumbs} />
+      <ActionCreate items={buttonCreateitem} />
+      <DataTable
+        columns={columns}
+        data={users}
+        pagination={pagination}
+        filters={filters}
+        sort={sort}
+      // withImport={true}
+      // withExport={[
+      //   {title:"test", href:"test"}
+      // ]}
+      // configFilter={configFilters}
+      />
     </AppLayout>
   );
 }

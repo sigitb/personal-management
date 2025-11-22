@@ -19,7 +19,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
                         {/* Main Content with Scroll */}
                         <main className="flex-1 overflow-y-auto overflow-x-hidden">
-                            <div className="container mx-auto p-4 sm:p-6 md:p-8 max-w-full">
+                            <div className="container mx-auto p-2 sm:p-4 md:p-6 max-w-full">
                                 {children}
                             </div>
                         </main>

@@ -12,13 +12,14 @@ import { Fragment } from 'react';
 
 interface BreadcrumbsProps {
     breadcrumbs: BreadcrumbDataItem[];
+    classname?: string
 }
 
-export function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {    
+export function Breadcrumbs({ breadcrumbs, classname }: BreadcrumbsProps) {    
     return (
         <>
             {breadcrumbs.length > 0 && (
-                <Breadcrumb>
+                <Breadcrumb className={classname}>
                     <BreadcrumbList>
                         {breadcrumbs.map((item, index) => {
                             const isLast = index === breadcrumbs.length - 1;
