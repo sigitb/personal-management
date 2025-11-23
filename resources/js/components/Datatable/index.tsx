@@ -12,10 +12,7 @@ import { Filter, Plus } from 'lucide-react';
 import { Button } from '../ui/button';
 import { DefaultSearch } from './tabel-defaulf-seach';
 import { cn } from '@/lib/utils';
-import { FILE_CONFIGS, SingleFileImport } from '../import-file';
-import { ValidatedFile } from '@/types/import-file';
 import { ExportData } from '../export';
-import { Breadcrumbs } from '../breadcrumbs';
 
 
 export function DataTable({

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MasterData\Finance\FinanceCategoryController;
 use App\Http\Controllers\MasterData\Finance\FinanceTypeController;
+use App\Http\Controllers\MasterData\Project\ProjectController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +28,13 @@ Route::middleware(['auth'])->prefix('admin-panel')->name('admin_panel.')->group(
     Route::get('/dashboard',[TestController::class,'index'])->name('dashboard');
 
     // master-data
-    // finance type
+    // finance
     Route::prefix('finance')->name('finance.')->group(function(){
         Route::resource('type', FinanceTypeController::class);
         Route::resource('category', FinanceCategoryController::class);
     });
+    // project
+    Route::resource('project', ProjectController::class);
 
 });
 

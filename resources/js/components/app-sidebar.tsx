@@ -45,7 +45,7 @@ const MainNavMenu:NavGroup[] = [
         subMenu:[
           {
             title:"Project",
-            href:"#"
+            href:"/admin-panel/project"
           },
           {
             title:"Project Board",
