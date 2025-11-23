@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('user_id')->references('id')->on('users');
+            $table->uuid('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->uuidMorphs('activitable');
             $table->string('action');
             $table->text('before_data')->nullable();

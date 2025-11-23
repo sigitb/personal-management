@@ -22,7 +22,7 @@ class FinanceTypeController extends Controller
         })
         ->whereNull('deleted_at')
         ->where('user_id', $request->user()->id)
-        ->orderBy($request->sort_by ?? 'name', $request->sort_direction ?? 'desc')
+        ->orderBy($request->sort_by ?? 'created_at', $request->sort_direction ?? 'desc')
         ->paginate($request->per_page ?? 10)
         ->withQueryString();
 

@@ -37,7 +37,7 @@ trait LogActivity
                 'after_data'   => in_array($action, ['created', 'updated'])
                     ? $model->getAttributes()
                     : null,
-                'user_id'    => Auth::user()->id,
+                'user_id'    => Auth::user()->id ?? null,
                 'created_at' => now()
             ]);
         } catch (\Exception $e) {
