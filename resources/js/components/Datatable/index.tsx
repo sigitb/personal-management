@@ -84,6 +84,7 @@ export function DataTable({
     // Reset filters
     const resetFilters = () => {
         setLocalFilters({});
+        setShowFilters(false)
         navigate({
             sort_by: sortConfig.column,
             sort_direction: sortConfig.direction,

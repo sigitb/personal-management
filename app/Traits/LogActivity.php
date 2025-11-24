@@ -17,7 +17,6 @@ trait LogActivity
         });
 
         static::updating(function ($model) {
-            info($model);
             static::logActivity($model, 'updated', $model->getOriginal());
         });
 

@@ -60,7 +60,7 @@ const MainNavMenu:NavGroup[] = [
     items:[
       {
         title:"Finance Personal",
-        href:"#",
+        href:"/admin-panel/transaction/personal",
         icon:Wallet
       },
       {
