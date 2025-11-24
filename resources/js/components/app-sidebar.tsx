@@ -45,11 +45,11 @@ const MainNavMenu:NavGroup[] = [
         subMenu:[
           {
             title:"Project",
-            href:"/admin-panel/project"
+            href:"/admin-panel/project/base"
           },
           {
             title:"Project Board",
-            href:"#"
+            href:"/admin-panel/project/board"
           }
         ]
       },

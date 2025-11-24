@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MasterData\Finance\FinanceCategoryController;
 use App\Http\Controllers\MasterData\Finance\FinanceTypeController;
+use App\Http\Controllers\MasterData\Project\ProjectBoardController;
 use App\Http\Controllers\MasterData\Project\ProjectController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +35,10 @@ Route::middleware(['auth'])->prefix('admin-panel')->name('admin_panel.')->group(
         Route::resource('category', FinanceCategoryController::class);
     });
     // project
-    Route::resource('project', ProjectController::class);
+    Route::prefix('project')->name('project.')->group(function(){
+        Route::resource('base', ProjectController::class);
+        Route::resource('board', ProjectBoardController::class);
+    });
 
 });
 

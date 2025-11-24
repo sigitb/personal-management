@@ -3,53 +3,59 @@ import { ActionCreate } from "@/components/action-create";
 import { DataTable } from "@/components/Datatable";
 import Modal from "@/components/modal";
 import { PageHeader } from "@/components/page-header";
-import { NormalSelect } from "@/components/select-all";
-import { Badge } from "@/components/ui/badge";
+import { SingleSelectSearch } from "@/components/select-all";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import AppLayout from "@/Layouts/AppLayout";
 import { ActionCreateItem } from "@/types";
 import { BreadcrumbDataItem } from "@/types/breadcrumb";
 import { ActionButton, Column, ConfigFilter, PaginationData } from "@/types/datatable";
+import { Option } from "@/types/select";
 import { router } from "@inertiajs/react";
 import { SquarePen, Trash2 } from "lucide-react";
 import { useState } from "react";
 
+interface ProjectBoard {
+    id?: string;
+    project_id: string;
+    name: string;
+    project?: Project;
+}
+
 interface Project {
     id?: string;
     name: string;
-    description: string;
-    status: string;
-    total_amount: number;
-    created_at?: string;
 }
 
+type ProjectBoardForm = {
+    id?: string;
+    project_id: string;
+    name: string;
+};
+
+
 interface Props {
-    data: Project[];
+    data: ProjectBoard[];
+    projects: Project[];
     pagination: PaginationData;
     filters: Record<string, any>;
     breadcrumbs: BreadcrumbDataItem[],
     sort: { column: string; direction: 'asc' | 'desc' };
 }
 
-export default function Project({ data, pagination, filters, breadcrumbs, sort }: Props) {
+export default function ProjectBoard({ data, pagination, filters, breadcrumbs, sort, projects }: Props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState<'create' | 'update'>('create');
-    const [selectedData, setSelectedData] = useState<Project | null>(null);
+    const [selectedData, setSelectedData] = useState<ProjectBoard | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState<Project>({
+    const [formData, setFormData] = useState<ProjectBoardForm>({
         name: '',
-        description: '',
-        status: '',
-        total_amount: 0,
+        project_id: '',
     });
     const resetForm = () => {
         setFormData({
             name: '',
-            description: '',
-            status: '',
-            total_amount: 0,
+            project_id: '',
         });
     };
 
@@ -67,9 +73,7 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
         setFormData({
             name: dataSelected?.name ?? '',
             id: dataSelected?.id ?? '',
-            description: dataSelected?.description ?? '',
-            status: dataSelected?.status ?? '',
-            total_amount: dataSelected?.total_amount ? parseInt(dataSelected.total_amount.toString()) : 0
+            project_id: dataSelected?.project_id ?? '',
         });
         setIsModalOpen(true);
     };
@@ -84,8 +88,8 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
 
         const url =
             modalMode === "create"
-                ? "/admin-panel/project/base"
-                : `/admin-panel/project/base/${formData.id}`;
+                ? "/admin-panel/project/board"
+                : `/admin-panel/project/board/${formData.id}`;
 
         const method = modalMode === "create" ? "post" : "put";
 
@@ -114,7 +118,7 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
             icon: Trash2,
             textColor: "text-red-400",
             confirm: true,
-            onClick: (id) => router.delete(`/admin-panel/project/base/${id}`),
+            onClick: (id) => router.delete(`/admin-panel/project/board/${id}`),
         },
     ];
 
@@ -132,32 +136,11 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
             pinnable: false,
         },
         {
-            key: 'description',
-            label: 'Description',
-            sortable: false,
+            key: 'project_id',
+            label: 'Project',
+            sortable: true,
             pinnable: false,
-        },
-        {
-            key: 'status_desc',
-            label: 'Status',
-            sortable: false,
-            pinnable: false,
-            render: (_, row) => <Badge className={
-                row.status_desc === 'Closed' ? 'bg-red-400' : (row.status_desc === 'Running' ? 'bg-green-400' : 'bg-gray-400')
-            }>{row.status_desc}</Badge>,
-        },
-        {
-            key: 'total_amount_formatted',
-            label: 'Total Amount',
-            sortable: false,
-            pinnable: false,
-        },
-         {
-            key: 'created_at',
-            label: 'Created At',
-            sortable: false,
-            pinnable: false,
-            render: (_, row) => <span>{new Date(row.created_at).toLocaleDateString()}</span>,
+            render: (_, row) => row.project?.name,
         },
         {
             key: 'id',
@@ -168,28 +151,25 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
     ];
 
     const buttonCreateitem: ActionCreateItem[] = [{
-        label: 'Add Project',
-        href: '/admin-panel/project/base/create',
+        label: 'Add Project Board',
+        href: '/admin-panel/project/board/create',
         type: 'modal',
         onClick: handleOpenCreate
     }]
+
     const configFilters: ConfigFilter[] = [
-        {
-            key: "status",
-            label: "Status",
-            placeholder: "Pilih Status.....",
-            filterType: "multiple-select",
-            filterOptions: [
-                { label: "Closed", value: "00" },
-                { label: "Running", value: "01" },
-                { label: "Mantenance", value: "02" }
-            ]
-        }
-    ]
+            {
+                key: "project_id",
+                label: "Project",
+                placeholder: "Pilih Project.....",
+                filterType: "select-search",
+                filterOptions: projects.map((item) => ({ value: item.id, label: item.name })) as Option[],
+            }
+        ]
 
     return (
         <AppLayout>
-            <PageHeader title='Project' description='List Project' breadcrumbs={breadcrumbs} />
+            <PageHeader title='Project Board' description='List Project Board' breadcrumbs={breadcrumbs} />
             <ActionCreate items={buttonCreateitem} />
             <DataTable
                 columns={columns}
@@ -204,7 +184,7 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
                 isOpen={isModalOpen}
                 onClose={handleClose}
                 onSubmit={handleSubmit}
-                title={modalMode === 'create' ? 'Add Project' : 'Edit Project'}
+                title={modalMode === 'create' ? 'Add Project Board' : 'Edit Project Board'}
                 isLoading={isLoading}
                 description={
                     modalMode === 'create'
@@ -213,7 +193,7 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
                 }
                 submitLabel={modalMode === 'create' ? 'Save' : 'Update'}
             >
-                <div className="space-y-2">
+                <div className="grid gap-2">
                     <Label htmlFor="name">
                         Name <span className="text-red-500">*</span>
                     </Label>
@@ -224,31 +204,15 @@ export default function Project({ data, pagination, filters, breadcrumbs, sort }
                         className="rounded-[7px]"
                     />
                 </div>
-
-                <div className="space-y-2 mt-2">
+                <div className="grid gap-2 mt-2">
                     <Label htmlFor="name">
-                        Status <span className="text-red-500">*</span>
+                        Project <span className="text-red-500">*</span>
                     </Label>
-                    <NormalSelect
-                        options={[
-                            { label: "Closed", value: "00" },
-                            { label: "Running", value: "01" },
-                            { label: "Mantenance", value: "02" }
-                        ]}
-                        onChange={(value) => setFormData({ ...formData, status: value })}
-                        placeholder="Pilih Status....."
-                        value={formData.status}
-                    />
-                </div>
-                <div className="space-y-2 mt-2">
-                    <Label htmlFor="name">
-                        Description <span className="text-red-500">*</span>
-                    </Label>
-                    <Textarea
-                        value={formData.description}
-                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        placeholder="Deskcription..."
-                        className="rounded-[7px]"
+                    <SingleSelectSearch
+                        options={projects.map((item) => ({ value: item.id, label: item.name })) as Option[]}
+                        onChange={(value) => setFormData({ ...formData, project_id: value })}
+                        placeholder="Project..."
+                        value={formData.project_id}
                     />
                 </div>
             </Modal>

@@ -2,23 +2,23 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Check, ChevronsUpDown, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
 } from '@/components/ui/command';
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from '@/components/ui/popover';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { MultiSelectSearchProps, NormalSelectProps, SingleSelectSearchProps } from '@/types/select';
@@ -110,11 +110,10 @@ export function MultiSelectSearch({
                 onSelect={() => handleSelect(option.value)}
               >
                 <Check
-                  className={`mr-2 h-4 w-4 ${
-                    selectedValues.includes(option.value)
+                  className={`mr-2 h-4 w-4 ${selectedValues.includes(option.value)
                       ? "opacity-100"
                       : "opacity-0"
-                  }`}
+                    }`}
                 />
                 {option.label}
               </CommandItem>
@@ -128,91 +127,96 @@ export function MultiSelectSearch({
 
 // 2. Single Select dengan Search
 export function SingleSelectSearch({
-    options,
-    placeholder = "Select item...",
-    value: controlledValue,
-    onChange,
-    className = "",
+  options,
+  placeholder = "Select item...",
+  value: controlledValue,
+  onChange,
+  className = "",
 }: SingleSelectSearchProps) {
-    const [open, setOpen] = useState<boolean>(false);
-    const [value, setValue] = useState<string>(controlledValue || "");
+  const [open, setOpen] = useState<boolean>(false);
+  const [value, setValue] = useState<string>(controlledValue || "");
 
-    const handleSelect = (currentValue: string) => {
-        const newValue = currentValue === value ? "" : currentValue;
-        setValue(newValue);
-        onChange?.(newValue);
-        setOpen(false);
-    };
+  const handleSelect = (currentValue: string) => {
+    const newValue = currentValue === value ? "" : currentValue;
+    setValue(newValue);
+    onChange?.(newValue);
+    setOpen(false);
+  };
 
-    return (
-        <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className={`w-full rounded-[7px] border-gray-700 justify-between ${className}`}
-                >
-                    {value
-                        ? options.find((option) => option.value === value)?.label
-                        : placeholder}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-full rounded-[7px] p-0">
-                <Command>
-                    <CommandInput placeholder="Search..." />
-                    <CommandEmpty>No item found.</CommandEmpty>
-                    <CommandGroup className="max-h-64 overflow-auto">
-                        {options.map((option) => (
-                            <CommandItem
-                                key={option.value}
-                                value={option.value}
-                                onSelect={handleSelect}
-                            >
-                                <Check
-                                    className={`mr-2 h-4 w-4 ${value === option.value ? 'opacity-100' : 'opacity-0'
-                                        }`}
-                                />
-                                {option.label}
-                            </CommandItem>
-                        ))}
-                    </CommandGroup>
-                </Command>
-            </PopoverContent>
-        </Popover>
-    );
+  useEffect(() => {
+    setValue(controlledValue ?? "");
+  }, [controlledValue]);
+
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className={`w-full rounded-[7px] border-gray-700 justify-between ${className}`}
+        >
+          {value
+            ? options.find((option) => option.value === value)?.label
+            : placeholder}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full rounded-[7px] p-0">
+        <Command>
+          <CommandInput placeholder="Search..." />
+          <CommandEmpty>No item found.</CommandEmpty>
+          <CommandGroup className="max-h-64 overflow-auto">
+            {options.map((option) => (
+              <CommandItem
+                key={option.value}
+                value={option.value}
+                onSelect={handleSelect}
+              >
+                <Check
+                  className={`mr-2 h-4 w-4 ${value === option.value ? 'opacity-100' : 'opacity-0'
+                    }`}
+                />
+                {option.label}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
 }
 
 // 3. Select Normal (tanpa search)
 export function NormalSelect({
-    options,
-    placeholder = "Select item...",
-    value: controlledValue,
-    onChange,
-    className = "",
+  options,
+  placeholder = "Select item...",
+  value: controlledValue,
+  onChange,
+  className = "",
 }: NormalSelectProps) {
-    const [value, setValue] = useState<string>(controlledValue || "");
+  const [value, setValue] = useState<string>(controlledValue || "");
 
-    const handleValueChange = (newValue: string) => {
-        setValue(newValue);
-        onChange?.(newValue);
-    };
+  const handleValueChange = (newValue: string) => {
+    setValue(newValue);
+    onChange?.(newValue);
+  };
 
-    return (
-        <Select value={value} onValueChange={handleValueChange}>
-            <SelectTrigger className={`w-full rounded-[7px] ${className}`}>
-                <SelectValue placeholder={placeholder} />
-            </SelectTrigger>
-            <SelectContent className='rounded-[7px]'>
-                {options.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                    </SelectItem>
-                ))}
-            </SelectContent>
-        </Select>
-    );
+  return (
+    <Select value={value} onValueChange={handleValueChange}>
+      <SelectTrigger className={`w-full rounded-[7px] ${className}`}>
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent className='rounded-[7px]'>
+        {options.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
 }
 
 

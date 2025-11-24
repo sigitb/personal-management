@@ -11,4 +11,9 @@ class ProjectBoard extends Model
     use HasUuids, LogActivity;
 
     protected $guarded = [];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
