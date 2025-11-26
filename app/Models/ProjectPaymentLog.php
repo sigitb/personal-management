@@ -10,6 +10,8 @@ class ProjectPaymentLog extends Model
 {
     use HasUuids, LogActivity;
 
+    public $timestamps = false;
+
     protected $guarded = [];
 
 }

@@ -65,7 +65,7 @@ const MainNavMenu:NavGroup[] = [
       },
       {
         title:"Finance Project",
-        href:"#",
+        href:"/admin-panel/transaction/project",
         icon:HandCoins
       }
     ]

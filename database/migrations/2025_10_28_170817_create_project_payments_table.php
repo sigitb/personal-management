@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('project_payments', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->text('notes')->nullable();
             $table->char('type', 2)->default('00')->comment('00 = payment, 01 = additional');
             $table->date('project_payment_date');
             $table->decimal('amount', 20, 2);

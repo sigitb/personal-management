@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('project_payment_logs', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->decimal('amount', 20, 2);
             $table->decimal('start_amount', 20, 2);
             $table->decimal('end_amount', 20, 2);
             $table->foreignUuid('project_payment_id')->references('id')->on('project_payments');
+            $table->foreignUuid('project_id')->references('id')->on('projects');
             $table->timestamp('created_at');
         });
     }

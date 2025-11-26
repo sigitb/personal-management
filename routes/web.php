@@ -7,6 +7,7 @@ use App\Http\Controllers\MasterData\Project\ProjectBoardController;
 use App\Http\Controllers\MasterData\Project\ProjectController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\Transaction\PersonalController;
+use App\Http\Controllers\Transaction\ProjectController as TransactionProjectController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -41,8 +42,9 @@ Route::middleware(['auth'])->prefix('admin-panel')->name('admin_panel.')->group(
         Route::resource('board', ProjectBoardController::class);
     });
     // transactions
-    Route::prefix('transaction')->name('transaction')->group(function(){
+    Route::prefix('transaction')->name('transaction.')->group(function(){
         Route::resource('personal', PersonalController::class);
+        Route::resource('project', TransactionProjectController::class);
     });
 
 });
