@@ -39,7 +39,7 @@ class ProjectController extends Controller
                 return $query->where('type', $type);
             })
             ->when($request->project_id, function ($query, $project) {
-                return $query->where('type', $project);
+                return $query->where('project_id', $project);
             })
             ->whereNull('deleted_at')
             ->where('user_id', $request->user()->id)
