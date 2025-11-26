@@ -72,8 +72,10 @@ export interface ConfigFilter {
     key: string;
     label: string;
     placeholder?: string;
-    filterType?: "text" | "number" | "select" | "multiple-select" | "select-search" | "date" | "date-range";
+    filterType?: "text" | "number" | "select" | "multiple-select" | "select-search" | "date" | "date-range" | "select-dynamic";
     filterOptions?: Option[];
+    fetchUrl?:string;
+    dependsOn?: string;
 }
 
 export interface TableFiltersProps {

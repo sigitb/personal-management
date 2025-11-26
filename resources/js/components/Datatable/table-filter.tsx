@@ -4,6 +4,7 @@ import { ConfigFilter, TableFiltersProps } from '@/types/datatable';
 import { MultiSelectSearch, NormalSelect, SingleSelectSearch } from '../select-all';
 import { Option } from '@/types/select';
 import { DatePicker, DateRangePicker } from '../datepicker';
+import { useEffect, useState } from 'react';
 
 export function TableFilters({
     configFilter,
@@ -31,7 +32,9 @@ export function TableFilters({
         placeholder,
         key,
         filterOptions,
-        filterType
+        filterType,
+        fetchUrl,
+        dependsOn
     }: ConfigFilter) => {
         switch (filterType) {
             case "select":
@@ -85,16 +88,49 @@ export function TableFilters({
                         <DatePicker key={key} placeholder={`pilih tanggal....`} value={filters[key] || ''} onChange={(value) => handleFilterChange(key, value)} />
                     </div>
                 )
-                case "date-range":
-                    return (
-                        <div className="space-y-2">
-                            <label htmlFor={key} className="text-sm font-medium">
-                                {label}
-                            </label>
-                            <DateRangePicker key={key} placeholder={`pilih tanggal....`} value={filters[key] || ''} onChange={(value) => handleFilterChange(key, value)} />
-                        </div>
-                    )
-    
+            case "date-range":
+                return (
+                    <div className="space-y-2">
+                        <label htmlFor={key} className="text-sm font-medium">
+                            {label}
+                        </label>
+                        <DateRangePicker key={key} placeholder={`pilih tanggal....`} value={filters[key] || ''} onChange={(value) => handleFilterChange(key, value)} />
+                    </div>
+                )
+            case "select-dynamic":
+                const parentValue = filters[dependsOn!];
+
+                const [options, setOptions] = useState<Option[]>([]);
+
+                useEffect(() => {
+                    if (!fetchUrl || !dependsOn) return;
+
+                    if (!parentValue) {
+                        setOptions([]);
+                        handleFilterChange(key, undefined);
+                        return;
+                    }
+
+                    const loadOptions = async () => {
+                        const res = await fetch(`${fetchUrl}/${parentValue}`);
+                        const data = await res.json();
+                        setOptions(data);
+                    };
+
+                    loadOptions();
+                }, [parentValue]);
+
+                return (
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">{label}</label>
+                        <NormalSelect
+                            options={options}
+                            placeholder={placeholder}
+                            value={filters[key] || ""}
+                            onChange={(value) => handleFilterChange(key, value)}
+                        />
+                    </div>
+                );
             case "number":
             case "text":
                 return (
